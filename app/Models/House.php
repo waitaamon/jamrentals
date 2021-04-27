@@ -22,6 +22,11 @@ class House extends Model
         return $this->hasMany(Payment::class);
     }
 
+    public function approvedPayments()
+    {
+        return $this->payments()->approved();
+    }
+
     public function scopeOccupied(Builder $query):Builder
     {
         return $query->where('is_occupied', true);

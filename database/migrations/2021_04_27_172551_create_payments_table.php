@@ -21,6 +21,7 @@ class CreatePaymentsTable extends Migration
             $table->boolean('is_deposit')->default(false);
             $table->date('month')->default(today('Africa/Nairobi'));
             $table->date('date_paid')->default(today('Africa/Nairobi'));
+            $table->string('status')->default('approved');
             $table->timestamps();
             $table->softDeletes();
         });

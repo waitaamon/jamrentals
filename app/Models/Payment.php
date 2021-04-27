@@ -10,7 +10,7 @@ class Payment extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['house_id', 'tenant', 'amount', 'is_deposit', 'month', 'date_paid'];
+    protected $fillable = ['house_id', 'tenant', 'amount', 'is_deposit', 'month', 'date_paid', 'status'];
 
     public function house(): BelongsTo
     {
@@ -25,5 +25,10 @@ class Payment extends Model
     public function scopeRent(Builder $query): Builder
     {
         return $query->where('is_deposit', false);
+    }
+
+    public function scopeApproved(Builder $query): Builder
+    {
+        return $query->where('status', 'approved');
     }
 }
