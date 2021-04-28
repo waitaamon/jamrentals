@@ -12,6 +12,8 @@ class Payment extends Model
 
     protected $fillable = ['house_id', 'tenant', 'amount', 'is_deposit', 'month', 'date_paid', 'status'];
 
+    protected $dates = ['month', 'date_paid'];
+
     public function house(): BelongsTo
     {
         return $this->belongsTo(House::class);

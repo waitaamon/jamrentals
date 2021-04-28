@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Building;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BuildingResource;
-use App\Http\Requests\{StoreBuildingRequest, UpdateBuildingRequest, UpdateHouseRequest};
+use App\Http\Requests\{StoreBuildingRequest, UpdateBuildingRequest};
 
 class BuildingsController extends Controller
 {
