@@ -17,6 +17,7 @@ class StorePaymentRequest extends FormRequest
         return [
             'house' => 'required|integer|exists:houses,id',
             'amount' => 'required|numeric|min:0',
+            'tenant' => 'required|string|max:254',
             'is_deposit' => 'required|boolean',
             'month' => 'required|date',
             'date_paid' => 'required|date',
