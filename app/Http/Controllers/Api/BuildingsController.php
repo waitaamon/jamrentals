@@ -4,16 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Building;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\BuildingResource;
+use App\Http\Resources\{BuildingResource, BuildingsCollection};
 use App\Http\Requests\{StoreBuildingRequest, UpdateBuildingRequest};
 
 class BuildingsController extends Controller
 {
     public function index()
     {
-        $buildings = Building::withCount('houses')->get();
+        $buildings = Building::withCount('houses')->paginate(request()->get('per_page'));
 
-        return response(BuildingResource::collection($buildings));
+        return response(new BuildingsCollection($buildings));
     }
 
     public function store(StoreBuildingRequest $request)

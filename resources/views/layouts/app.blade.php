@@ -17,19 +17,25 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+        <div class="min-h-screen bg-gray-100" id="app">
+            <div class="bg-indigo-600 pb-32">
 
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
+                @include('layouts.navigation')
+
+                <header class="py-10">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h1 class="text-3xl font-bold text-white">
+                            {{ $header }}
+                        </h1>
+                    </div>
+                </header>
+
+            </div>
+
+            <main class="-mt-32">
+                <div class="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
+                    {{ $slot }}
                 </div>
-            </header>
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
             </main>
         </div>
     </body>
