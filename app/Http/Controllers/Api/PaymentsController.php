@@ -18,6 +18,7 @@ class PaymentsController extends Controller
             ->where(request()->filled('house'), fn($query) => $query->where('house_id', request()->get('house')))
             ->where(request()->filled('from'), fn($query) => $query->where('month', '>=', request()->get('from')))
             ->where(request()->filled('to'), fn($query) => $query->where('month', '<=', request()->get('to')))
+            ->where(request()->filled('status'), fn($query) => $query->where('status', request()->get('status')))
             ->paginate(request()->get('per_page'));
 
         return response(new PaymentCollection($payments));

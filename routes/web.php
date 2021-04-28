@@ -21,6 +21,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::apiResource('api/houses', \App\Http\Controllers\Api\HousesController::class);
     Route::apiResource('api/payments', \App\Http\Controllers\Api\PaymentsController::class);
 
+    Route::post('api/payments-reverse', [\App\Http\Controllers\Api\PaymentActionsController::class, 'reverse']);
+    Route::post('api/payments-export-excel', [\App\Http\Controllers\Api\PaymentActionsController::class, 'exportExcel']);
+
 });
 
 require __DIR__ . '/auth.php';
