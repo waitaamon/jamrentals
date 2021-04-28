@@ -16,6 +16,8 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('house_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('reversed_by')->nullable()->constrained('users');
             $table->string('tenant');
             $table->bigInteger('amount');
             $table->boolean('is_deposit')->default(false);

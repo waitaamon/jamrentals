@@ -6,25 +6,20 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StorePaymentRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+
+    public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'house' => 'required|integer|exists:houses,id',
+            'amount' => 'required|numeric|min:0',
+            'is_deposit' => 'required|boolean',
+            'month' => 'required|date',
+            'date_paid' => 'required|date',
         ];
     }
 }

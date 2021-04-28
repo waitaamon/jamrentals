@@ -10,13 +10,23 @@ class Payment extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['house_id', 'tenant', 'amount', 'is_deposit', 'month', 'date_paid', 'status'];
+    protected $fillable = ['house_id', 'user_id', 'reversed_by', 'tenant', 'amount', 'is_deposit', 'month', 'date_paid', 'status'];
 
     protected $dates = ['month', 'date_paid'];
 
     public function house(): BelongsTo
     {
         return $this->belongsTo(House::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function reversedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'reversed_by');
     }
 
     public function scopeDeposit(Builder $query): Builder
