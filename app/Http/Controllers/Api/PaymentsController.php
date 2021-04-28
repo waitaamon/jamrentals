@@ -14,11 +14,11 @@ class PaymentsController extends Controller
     public function index()
     {
         $payments = Payment::query()
-            ->where(request()->filled('deposit'), fn($query) => $query->where('is_deposit', (bool)request()->get('deposit')))
-            ->where(request()->filled('house'), fn($query) => $query->where('house_id', request()->get('house')))
-            ->where(request()->filled('from'), fn($query) => $query->where('month', '>=', request()->get('from')))
-            ->where(request()->filled('to'), fn($query) => $query->where('month', '<=', request()->get('to')))
-            ->where(request()->filled('status'), fn($query) => $query->where('status', request()->get('status')))
+            ->when(request()->filled('deposit'), fn($query) => $query->where('is_deposit', (bool)request()->get('deposit')))
+            ->when(request()->filled('house'), fn($query) => $query->where('house_id', request()->get('house')))
+            ->when(request()->filled('from'), fn($query) => $query->where('month', '>=', request()->get('from')))
+            ->when(request()->filled('to'), fn($query) => $query->where('month', '<=', request()->get('to')))
+            ->when(request()->filled('status'), fn($query) => $query->where('status', request()->get('status')))
             ->paginate(request()->get('per_page'));
 
         return response(new PaymentCollection($payments));

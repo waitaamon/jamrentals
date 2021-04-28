@@ -11,7 +11,10 @@ class HousesController extends Controller
 {
     public function index()
     {
-        $houses = House::withSum('approvedPayments', 'amount')->get();
+        $houses = House::query()
+            ->withSum('approvedPayments', 'amount')
+            ->when(request()->filled('building'), fn($query) => $query->where('building_id', request()->get('building')))
+            ->paginate(request()->get('per_page'));
 
         return response(new HousesCollection($houses));
     }

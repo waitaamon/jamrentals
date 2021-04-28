@@ -17,6 +17,16 @@ class Building extends Model
         return $this->hasMany(House::class);
     }
 
+    public function OccupiedHouses(): HasMany
+    {
+        return $this->hasMany(House::class)->occupied();
+    }
+
+    public function vacantHouses(): HasMany
+    {
+        return $this->hasMany(House::class)->vacant();
+    }
+
     public function payments(): HasManyThrough
     {
         return $this->hasManyThrough(Payment::class, House::class);

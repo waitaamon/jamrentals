@@ -13,8 +13,11 @@ class BuildingController extends Controller
 
     public function show(int $id)
     {
-        $building = Building::with('houses')->findOrFail($id);
+        $building = Building::query()
+            ->with('houses')
+            ->withCount(['houses', 'OccupiedHouses', 'vacantHouses'])
+            ->findOrFail($id);
 
-        return view('buildings.index', compact('building'));
+        return view('buildings.show', compact('building'));
     }
 }
