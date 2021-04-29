@@ -10,7 +10,7 @@
                     {{ showFilters ? 'Hide' : 'Show' }} Filters
                 </a>
                 <div v-if="showFilters">
-                    <data-table-filters model="payment" :options="customers" @apply-filters="applyFilters"/>
+                    <payment-table-filters :buildings="buildings" @apply-filters="applyFilters"/>
                 </div>
 
             </div>
@@ -40,7 +40,7 @@
                     </app-drop-down>
                 </div>
 
-                <cash-payment-modal :customers="customers" @fetch-payments="fetchPayments"/>
+                <payment-modal :buildings="buildings" @fetch-payments="fetchPayments"/>
             </div>
         </div>
         <div class="mt-3">
@@ -54,23 +54,31 @@
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Customer
+                            Building
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            House
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Tenant
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Amount
                         </th>
                         <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Status
+                            class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Month
                         </th>
                         <th scope="col"
                             class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Date
+                            Date Paid
                         </th>
-                        <!--                        <th scope="col" class="relative px-6 py-3">-->
-                        <!--                            <span class="sr-only">Edit</span>-->
-                        <!--                        </th>-->
+                        <th scope="col" class="relative px-6 py-3">
+                            <span class="sr-only">Edit</span>
+                        </th>
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -79,20 +87,26 @@
                             <input type="checkbox" v-model="selected" :value="payment.id">
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900 capitalize">
-                            {{ payment.customer_name }}
+                            {{ payment.building_name }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900 capitalize">
+                            {{ payment.house_name }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900 capitalize">
+                            {{ payment.tenant }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
                             {{ payment.amount.toLocaleString() }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-gray-500">
-                            {{ payment.status }}
+                            {{ payment.month }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-gray-500">
-                            {{ payment.date }}
+                            {{ payment.date_paid }}
                         </td>
-                        <!--                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">-->
-                        <!--                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>-->
-                        <!--                        </td>-->
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -105,12 +119,17 @@
 
 <script>
 import TablePagination from "../../components/TablePagination";
-import CashPaymentModal from "./partials/CashPaymentModal";
-import AppDropDown from "../../components/AppDropdown";
-import DropdownItem from "../../components/partials/DropDownItem";
-import DataTableFilters from "../../components/DataTableFilters";
+import PaymentTableFilters from "./partials/PaymentTableFIlters";
+import PaymentModal from "./partials/PaymentModal";
+import AppDropDown from "../../components/Appdropdown";
+
 export default {
-    components: {DataTableFilters, DropdownItem, AppDropDown, CashPaymentModal, TablePagination},
+    name: 'payments-list',
+    components: {
+        AppDropDown,
+        PaymentModal,
+        PaymentTableFilters, TablePagination
+    },
     data() {
         return {
             payments: [],
@@ -119,7 +138,7 @@ export default {
             selected: [],
             selectAll: false,
             showFilters: false,
-            customers: [],
+            buildings: [],
             filters: {}
         }
     },
@@ -137,8 +156,8 @@ export default {
     methods: {
         async prerequisites() {
             try {
-                let response = await axios.get('api/cash-payment-prerequisites')
-                this.customers = response.data.customers
+                let response = await axios.get('api/payment-prerequisites')
+                this.buildings = response.data.buildings
             } catch (e) {
                 this.$toast.error('Something went wrong try again later');
             }
@@ -162,14 +181,14 @@ export default {
             }
             axios({
                 method: 'post',
-                url: 'api/cash-payment-export-excel',
+                url: 'api/payment-export-excel',
                 responseType: 'blob',
                 data: {payments: this.selected}
             }).then(response => {
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
                 link.href = url;
-                link.setAttribute('download', `pesapot-cash-payments.xlsx`);
+                link.setAttribute('download', `rent-payments.xlsx`);
                 document.body.appendChild(link);
                 link.click();
             }).catch(e => {
@@ -182,7 +201,7 @@ export default {
                 return
             }
             try {
-                await axios.post(`api/cash-payments`, {
+                await axios.post(`api/payment-bulk-delete`, {
                     payments: this.selected
                 })
                 await this.fetchPayments()
@@ -190,24 +209,17 @@ export default {
                 this.$toast.error('Something went wrong try again later');
             }
         },
-        async markTransfer() {
-            if (!this.selected.length) {
-                this.$toast.error('Select at least one record');
-                return
-            }
-            try {
-                await axios.post('api/cash-payment-mark-transferred', {
-                    payments: this.selected
-                })
-                await this.fetchPayments()
-            } catch (e) {
-                this.$toast.error('Something went wrong try again later');
-            }
-        },
+
         async fetchPayments() {
             try {
                 let response = await axios.get(
-                    `api/cash-payments?per_page=${this.perPage}&customer=${this.filters.entity ??= ''}&status=${this.filters.status ??= 'active'}&start=${this.filters.start ??= ''}&end=${this.filters.end ??= ''}`
+                    `api/payments?per_page=${this.perPage}`+
+                    `&building=${this.filters.building ??= ''}`+
+                    `&house=${this.filters.house ??= ''}`+
+                    `&status=${this.filters.status ??= 'approved'}`+
+                    `&deposit=${this.filters.is_deposit ??= ''}`+
+                    `&start=${this.filters.start ??= ''}`+
+                    `&end=${this.filters.end ??= ''}`
                 )
                 this.payments = response.data.data
                 this.paginationData = response.data.pagination
@@ -217,8 +229,8 @@ export default {
         }
     },
     created() {
-        this.fetchPayments()
         this.prerequisites()
+        this.fetchPayments()
     }
 }
 </script>

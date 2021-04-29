@@ -2,19 +2,30 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Building;
 use Carbon\Carbon;
 use App\Models\Payment;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\{PaymentCollection, PaymentResource};
+use App\Http\Resources\{BuildingResource, PaymentCollection, PaymentResource};
 use App\Http\Requests\{StorePaymentRequest, UpdatePaymentRequest};
 
 class PaymentsController extends Controller
 {
 
+    public function prerequisites()
+    {
+        $buildings = Building::with(['houses' => fn($query)=> $query->where('is_vacant', false)])->get();
+
+        return response()->json([
+            'buildings' => BuildingResource::collection($buildings)
+        ]);
+    }
+
     public function index()
     {
         $payments = Payment::query()
             ->when(request()->filled('deposit'), fn($query) => $query->where('is_deposit', (bool)request()->get('deposit')))
+            ->when(request()->filled('building'), fn($query) => $query->whereHas('house', fn($query) => $query->where('building_id', request()->get('building'))))
             ->when(request()->filled('house'), fn($query) => $query->where('house_id', request()->get('house')))
             ->when(request()->filled('from'), fn($query) => $query->where('month', '>=', request()->get('from')))
             ->when(request()->filled('to'), fn($query) => $query->where('month', '<=', request()->get('to')))
@@ -27,7 +38,7 @@ class PaymentsController extends Controller
     public function store(StorePaymentRequest $request)
     {
         $payment = Payment::create(array_merge(
-            $request->only('amount', 'is_deposit', 'tenant'),
+            $request->only('amount', 'is_deposit', 'tenant', 'note'),
             [
                 'house_id' => $request->house,
                 'user_id' => auth()->id(),
@@ -41,7 +52,7 @@ class PaymentsController extends Controller
 
     public function show(int $id)
     {
-        $payment = Payment::with('house', 'user', 'reversedBy')->findOrFail($id);
+        $payment = Payment::with('house', 'user', 'deletedBy')->findOrFail($id);
 
         return response(new PaymentResource($payment));
     }

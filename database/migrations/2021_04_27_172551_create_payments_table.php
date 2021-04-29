@@ -17,13 +17,14 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->foreignId('house_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('reversed_by')->nullable()->constrained('users');
+            $table->foreignId('deleted_by')->nullable()->constrained('users');
             $table->string('tenant');
             $table->bigInteger('amount');
             $table->boolean('is_deposit')->default(false);
             $table->date('month')->default(today('Africa/Nairobi'));
             $table->date('date_paid')->default(today('Africa/Nairobi'));
             $table->string('status')->default('approved');
+            $table->text('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

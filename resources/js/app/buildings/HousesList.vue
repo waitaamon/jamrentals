@@ -54,8 +54,8 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {{ house.deposit.toLocaleString() }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-green-500" :class="{'text-red-500': house.is_occupied}">
-                            {{ house.is_occupied ? 'Occupied' : 'Vacant' }}
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-green-500">
+                            <span :class="{'text-red-500': !house.is_occupied}">{{ house.is_occupied ? 'Occupied' : 'Vacant' }}</span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                             <a :href="`/houses/${house.id}`" class="text-indigo-600 hover:text-indigo-900">View</a>

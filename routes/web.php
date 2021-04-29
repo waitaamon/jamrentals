@@ -19,6 +19,11 @@ Route::group(['middleware' => ['auth']], function () {
     //Api
     Route::apiResource('api/buildings', \App\Http\Controllers\Api\BuildingsController::class);
     Route::apiResource('api/houses', \App\Http\Controllers\Api\HousesController::class);
+
+
+    Route::get('api/payment-prerequisites', [App\Http\Controllers\Api\PaymentsController::class, 'prerequisites']);
+    Route::post('api/payment-export-excel', [App\Http\Controllers\Api\PaymentActionsController::class, 'exportExcel']);
+    Route::post('api/payment-bulk-delete', [App\Http\Controllers\Api\PaymentActionsController::class, 'bulkDelete']);
     Route::apiResource('api/payments', \App\Http\Controllers\Api\PaymentsController::class);
 
     Route::post('api/payments-reverse', [\App\Http\Controllers\Api\PaymentActionsController::class, 'reverse']);

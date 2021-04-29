@@ -18,7 +18,7 @@ class HouseResource extends JsonResource
             'tenant' => $this->tenant ?: '',
             'tenant_phone' => $this->tenant_phone ?: '',
             'tenant_id' => $this->tenant_id ?: '',
-            'is_occupied' => $this->is_occupied ?: '',
+            'is_occupied' => (bool) $this->is_occupied,
             'payments' => PaymentResource::collection($this->whenLoaded('approvedPayments')),
             'payments_sum' => $this->approved_payments_sum_amount ?: 0,
             'created_at' => $this->created_at->format('d-M-Y')

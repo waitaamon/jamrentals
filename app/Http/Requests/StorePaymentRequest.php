@@ -21,6 +21,7 @@ class StorePaymentRequest extends FormRequest
             'is_deposit' => 'required|boolean',
             'month' => 'required|date',
             'date_paid' => 'required|date',
+            'note' => 'nullable|string|max:500'
         ];
     }
 }
