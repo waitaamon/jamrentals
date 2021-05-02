@@ -11,6 +11,7 @@
 
         <Modal v-model="showModal" modalClass="max-width: 700px" title="New Rent Payment">
             <div class="py-3">
+                {{ form }}
                 <form class="space-y-4">
                     <div>
                         <label for="building" class="block text-sm font-medium text-gray-700">Building</label>
@@ -61,33 +62,14 @@
                     <div>
                         <label for="month" class="block text-sm font-medium text-gray-700">Month</label>
                         <div class="mt-1">
-                            <date-picker class="inline-block h-full w-full" v-model="form.month" id="month">
-                                <template v-slot="{ inputValue, togglePopover }">
-                                    <div class="flex items-center">
-                                        <button
-                                            type="button"
-                                            class="p-2 bg-blue-100 border border-blue-200 hover:bg-blue-200 text-blue-600 rounded-l focus:bg-blue-500 focus:text-white focus:border-blue-500 focus:outline-none"
-                                            @click.prevent="togglePopover()"
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20"
-                                                class="w-4 h-4 fill-current"
-                                            >
-                                                <path
-                                                    d="M1 4c0-1.1.9-2 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4zm2 2v12h14V6H3zm2-6h2v2H5V0zm8 0h2v2h-2V0zM5 9h2v2H5V9zm0 4h2v2H5v-2zm4-4h2v2H9V9zm0 4h2v2H9v-2zm4-4h2v2h-2V9zm0 4h2v2h-2v-2z"
-                                                ></path>
-                                            </svg>
-                                        </button>
-                                        <input
-                                            :value="inputValue"
-                                            class="bg-white text-gray-700 w-full py-1 px-2 appearance-none border rounded-r focus:outline-none focus:border-blue-500"
-                                            readonly
-                                            @focus="togglePopover()"
-                                        />
-                                    </div>
-                                </template>
-                            </date-picker>
+                            <month-picker-input
+                                id="month"
+                                class="w-full"
+                                :no-default="true"
+                                :input-pre-filled="true"
+                                v-model="form.month"
+                            ></month-picker-input>
+
                         </div>
                         <p v-if="errors.month" class="mt-2 text-sm text-red-600" id="month-error">
                             {{ errors.month[0] }}
@@ -129,7 +111,8 @@
                         </p>
                     </div>
                     <div class="flex items-center">
-                        <input v-model="form.is_deposit" id="is_deposit" name="is_deposit" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                        <input v-model="form.is_deposit" id="is_deposit" name="is_deposit" type="checkbox"
+                               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
                         <label for="is_deposit" class="ml-2 block text-sm text-gray-900">
                             Is deposit
                         </label>
@@ -170,9 +153,12 @@
 </template>
 
 <script>
+import {MonthPickerInput} from 'vue-month-picker'
+
 export default {
     name: 'payment-modal',
     props: ['buildings'],
+    components: {MonthPickerInput},
     data() {
         return {
             showModal: false,
@@ -180,6 +166,13 @@ export default {
             errors: {},
             houses: [],
             form: {}
+        }
+    },
+    watch: {
+        'form.building': {
+            handler: function (val) {
+                this.houses = val ? val.houses : []
+            }
         }
     },
     methods: {
@@ -219,7 +212,7 @@ export default {
             }
         }
     },
-    created () {
+    created() {
         this.resetForm()
     }
 }

@@ -14,7 +14,7 @@ class PaymentsController extends Controller
 
     public function prerequisites()
     {
-        $buildings = Building::with(['houses' => fn($query)=> $query->where('is_vacant', false)])->get();
+        $buildings = Building::with(['houses' => fn($query)=> $query->where('is_occupied', true)])->get();
 
         return response()->json([
             'buildings' => BuildingResource::collection($buildings)
