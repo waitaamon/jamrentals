@@ -17,8 +17,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('payments/{id}', [\App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
 
     //Api
+
     Route::apiResource('api/buildings', \App\Http\Controllers\Api\BuildingsController::class);
     Route::apiResource('api/houses', \App\Http\Controllers\Api\HousesController::class);
+
+    Route::post('api/house-mark-vacant', [App\Http\Controllers\Api\HouseActionsController::class, 'markVacant']);
 
 
     Route::get('api/payment-prerequisites', [App\Http\Controllers\Api\PaymentsController::class, 'prerequisites']);

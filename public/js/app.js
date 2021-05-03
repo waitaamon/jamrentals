@@ -2035,6 +2035,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_TablePagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/TablePagination */ "./resources/js/components/TablePagination.vue");
 /* harmony import */ var _partials_HouseModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./partials/HouseModal */ "./resources/js/app/buildings/partials/HouseModal.vue");
+/* harmony import */ var _components_Appdropdown__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/Appdropdown */ "./resources/js/components/Appdropdown.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2114,11 +2115,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'houses-list',
   components: {
+    AppDropDown: _components_Appdropdown__WEBPACK_IMPORTED_MODULE_3__.default,
     HouseModal: _partials_HouseModal__WEBPACK_IMPORTED_MODULE_2__.default,
     TablePagination: _components_TablePagination__WEBPACK_IMPORTED_MODULE_1__.default
   },
@@ -2127,8 +2144,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       houses: [],
       paginationData: {},
-      perPage: 50
+      perPage: 50,
+      selected: [],
+      selectAll: false
     };
+  },
+  watch: {
+    selectAll: {
+      handler: function handler(val) {
+        this.selected = val ? this.houses.map(function (house) {
+          return house.id;
+        }) : [];
+      }
+    }
   },
   methods: {
     applyPagination: function applyPagination(data) {
@@ -2143,37 +2171,86 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$refs.houseModal.house = house;
       this.$refs.houseModal.showModal = true;
     },
-    fetchHouses: function fetchHouses() {
+    markVacant: function markVacant() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.get("/api/houses?per_page=".concat(_this.perPage, "&building=").concat(_this.building.id));
+                if (_this.selected.length) {
+                  _context.next = 3;
+                  break;
+                }
+
+                _this.$toast.error('Select at least one record');
+
+                return _context.abrupt("return");
 
               case 3:
-                response = _context.sent;
-                _this.houses = response.data.data;
-                _this.paginationData = response.data.pagination;
-                _context.next = 11;
-                break;
+                _context.prev = 3;
+                _context.next = 6;
+                return axios.post('/api/house-mark-vacant', {
+                  houses: _this.selected
+                });
+
+              case 6:
+                _context.next = 8;
+                return _this.fetchHouses();
 
               case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](0);
-                console.error('could not fetch houses');
+                _this.$toast.success('Successfully marked selected houses as vacant');
+
+                _context.next = 14;
+                break;
 
               case 11:
+                _context.prev = 11;
+                _context.t0 = _context["catch"](3);
+
+                _this.$toast.error('Could not mark houses as vacant');
+
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 8]]);
+        }, _callee, null, [[3, 11]]);
+      }))();
+    },
+    fetchHouses: function fetchHouses() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios.get("/api/houses?per_page=".concat(_this2.perPage, "&building=").concat(_this2.building.id));
+
+              case 3:
+                response = _context2.sent;
+                _this2.houses = response.data.data;
+                _this2.paginationData = response.data.pagination;
+                _context2.next = 11;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](0);
+
+                _this2.$toast.error('Something went wrong try again later');
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 8]]);
       }))();
     }
   },
@@ -64187,8 +64264,55 @@ var render = function() {
   return _c("div", [
     _c(
       "div",
-      { staticClass: "flex justify-end" },
+      { staticClass: "flex justify-end space-x-3" },
       [
+        _c(
+          "div",
+          [
+            _c("app-drop-down", { attrs: { label: "Bulk Actions" } }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "block flex items-center space-x-2 class = 'block flex w-full px-4 py-2 space-x-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900'",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.markVacant($event)
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "h-5 w-5",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        viewBox: "0 0 20 20",
+                        fill: "currentColor"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          "fill-rule": "evenodd",
+                          d:
+                            "M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z",
+                          "clip-rule": "evenodd"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Mark as Vacant")])
+                ]
+              )
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
         _c("house-modal", {
           ref: "houseModal",
           attrs: { building: _vm.building },
@@ -64204,14 +64328,182 @@ var render = function() {
         { staticClass: "overflow-hidden border-b border-gray-200 sm:rounded" },
         [
           _c("table", { staticClass: "min-w-full divide-y divide-gray-200" }, [
-            _vm._m(0),
+            _c("thead", { staticClass: "bg-gray-50" }, [
+              _c("tr", [
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectAll,
+                          expression: "selectAll"
+                        }
+                      ],
+                      attrs: { type: "checkbox" },
+                      domProps: {
+                        checked: Array.isArray(_vm.selectAll)
+                          ? _vm._i(_vm.selectAll, null) > -1
+                          : _vm.selectAll
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.selectAll,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.selectAll = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.selectAll = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.selectAll = $$c
+                          }
+                        }
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Name\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Tenant\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Rent\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Deposit\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Is Occupied\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
+            ]),
             _vm._v(" "),
             _c(
               "tbody",
               { staticClass: "bg-white divide-y divide-gray-200" },
               _vm._l(_vm.houses, function(house) {
                 return _c("tr", { key: house.id }, [
-                  _vm._m(1, true),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selected,
+                            expression: "selected"
+                          }
+                        ],
+                        attrs: { type: "checkbox" },
+                        domProps: {
+                          value: house.id,
+                          checked: Array.isArray(_vm.selected)
+                            ? _vm._i(_vm.selected, house.id) > -1
+                            : _vm.selected
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.selected,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = house.id,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 && (_vm.selected = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.selected = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.selected = $$c
+                            }
+                          }
+                        }
+                      })
+                    ]
+                  ),
                   _vm._v(" "),
                   _c(
                     "td",
@@ -64348,91 +64640,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-gray-50" }, [
-      _c("tr", [
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-            attrs: { scope: "col" }
-          },
-          [_c("input", { attrs: { type: "checkbox" } })]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-            attrs: { scope: "col" }
-          },
-          [_vm._v("\n                        Name\n                    ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-            attrs: { scope: "col" }
-          },
-          [_vm._v("\n                        Tenant\n                    ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-            attrs: { scope: "col" }
-          },
-          [_vm._v("\n                        Rent\n                    ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-            attrs: { scope: "col" }
-          },
-          [_vm._v("\n                        Deposit\n                    ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass:
-              "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-            attrs: { scope: "col" }
-          },
-          [
-            _vm._v(
-              "\n                        Is Occupied\n                    "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          { staticClass: "relative px-6 py-3", attrs: { scope: "col" } },
-          [_c("span", { staticClass: "sr-only" }, [_vm._v("Edit")])]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
-      "td",
-      {
-        staticClass:
-          "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
-      },
-      [_c("input", { attrs: { type: "checkbox" } })]
+      "th",
+      { staticClass: "relative px-6 py-3", attrs: { scope: "col" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Edit")])]
     )
   }
 ]
