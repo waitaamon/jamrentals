@@ -31,4 +31,9 @@ class Building extends Model
     {
         return $this->hasManyThrough(Payment::class, House::class);
     }
+
+    public function invoices(): HasManyThrough
+    {
+        return $this->hasManyThrough(Invoice::class, House::class);
+    }
 }
