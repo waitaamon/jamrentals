@@ -2277,6 +2277,8 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$emit('fetch-buildings', true);
 
+        _this.$toast.success('Successfully saved building.');
+
         if (_this.closeAfterSave) {
           _this.showModal = false;
         }
@@ -2411,6 +2413,8 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$emit('fetch-houses', true);
 
+        _this.$toast.success('Successfully saved house.');
+
         if (_this.closeAfterSave) {
           _this.showModal = false;
         }
@@ -2482,6 +2486,13 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2761,7 +2772,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var _this4$filters, _this4$filters$buildi, _this4$filters2, _this4$filters2$house, _this4$filters3, _this4$filters3$statu, _this4$filters4, _this4$filters4$is_de, _this4$filters5, _this4$filters5$start, _this4$filters6, _this4$filters6$end, response;
+        var _this4$filters, _this4$filters$buildi, _this4$filters2, _this4$filters2$house, _this4$filters3, _this4$filters3$statu, _this4$filters4, _this4$filters4$start, _this4$filters5, _this4$filters5$end, response;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
@@ -2769,7 +2780,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return axios.get("api/payments?per_page=".concat(_this4.perPage) + "&building=".concat((_this4$filters$buildi = (_this4$filters = _this4.filters).building) !== null && _this4$filters$buildi !== void 0 ? _this4$filters$buildi : _this4$filters.building = '') + "&house=".concat((_this4$filters2$house = (_this4$filters2 = _this4.filters).house) !== null && _this4$filters2$house !== void 0 ? _this4$filters2$house : _this4$filters2.house = '') + "&status=".concat((_this4$filters3$statu = (_this4$filters3 = _this4.filters).status) !== null && _this4$filters3$statu !== void 0 ? _this4$filters3$statu : _this4$filters3.status = 'approved') + "&deposit=".concat((_this4$filters4$is_de = (_this4$filters4 = _this4.filters).is_deposit) !== null && _this4$filters4$is_de !== void 0 ? _this4$filters4$is_de : _this4$filters4.is_deposit = '') + "&start=".concat((_this4$filters5$start = (_this4$filters5 = _this4.filters).start) !== null && _this4$filters5$start !== void 0 ? _this4$filters5$start : _this4$filters5.start = '') + "&end=".concat((_this4$filters6$end = (_this4$filters6 = _this4.filters).end) !== null && _this4$filters6$end !== void 0 ? _this4$filters6$end : _this4$filters6.end = ''));
+                return axios.get("api/payments?per_page=".concat(_this4.perPage) + "&building=".concat((_this4$filters$buildi = (_this4$filters = _this4.filters).building) !== null && _this4$filters$buildi !== void 0 ? _this4$filters$buildi : _this4$filters.building = '') + "&house=".concat((_this4$filters2$house = (_this4$filters2 = _this4.filters).house) !== null && _this4$filters2$house !== void 0 ? _this4$filters2$house : _this4$filters2.house = '') + "&status=".concat((_this4$filters3$statu = (_this4$filters3 = _this4.filters).status) !== null && _this4$filters3$statu !== void 0 ? _this4$filters3$statu : _this4$filters3.status = 'all') + "&start=".concat((_this4$filters4$start = (_this4$filters4 = _this4.filters).start) !== null && _this4$filters4$start !== void 0 ? _this4$filters4$start : _this4$filters4.start = '') + "&end=".concat((_this4$filters5$end = (_this4$filters5 = _this4.filters).end) !== null && _this4$filters5$end !== void 0 ? _this4$filters5$end : _this4$filters5.end = ''));
 
               case 3:
                 response = _context3.sent;
@@ -2973,6 +2984,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'payment-modal',
@@ -2996,16 +3008,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     }
   },
+  computed: {
+    currentMonth: function currentMonth() {
+      var date = new Date();
+      return date.getMonth() + 1;
+    },
+    currentYear: function currentYear() {
+      var date = new Date();
+      return date.getFullYear();
+    }
+  },
   methods: {
     submit: function submit() {
       var _this = this;
 
+      this.errors = {};
       axios.post('api/payments', _objectSpread(_objectSpread({}, this.form), {}, {
-        house: this.form.house ? this.form.house.id : ''
+        building: this.form.building ? this.form.building.id : '',
+        house: this.form.house ? this.form.house.id : '',
+        tenant: this.form.house ? this.form.house.tenant : '',
+        month: this.month ? "".concat(month.year, "-").concat(month.monthIndex, "-01") : "".concat(this.currentYear, "-").concat(this.currentMonth, "-01")
       })).then(function (response) {
         _this.resetForm();
 
         _this.$emit('fetch-payments', true);
+
+        _this.$toast.success('Successfully saved payment.');
 
         if (_this.closeAfterSave) {
           _this.showModal = false;
@@ -3161,13 +3189,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "payment-table-filters",
   props: ['buildings'],
   data: function data() {
     return {
-      statuses: ['approved', 'deleted'],
+      statuses: ['all', 'rent', 'deposit', 'deleted'],
       filters: {},
+      houses: [],
       masks: {
         input: 'DD-MM-YYYY'
       }
@@ -3182,22 +3222,26 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    clearFilters: function clearFilters() {
+    updateHouses: function updateHouses(building, id) {
+      this.houses = building.houses;
+    },
+    resetFilters: function resetFilters() {
       this.filters = {
-        status: 'active',
-        entity: '',
+        building: '',
+        house: '',
+        status: 'all',
         start: '',
         end: ''
       };
     },
     applyFilters: function applyFilters() {
       var data = {
-        entity: this.filters.entity ? this.filters.entity.id : '',
+        building: this.filters.building ? this.filters.building.id : '',
+        house: this.filters.house ? this.filters.house.id : '',
         status: this.filters.status,
         start: this.filters.start ? this.filters.start.toDateString() : '',
         end: this.filters.end ? this.filters.end.toDateString() : ''
       };
-      console.log(data);
       this.$emit('apply-filters', data);
     },
     created: function created() {
@@ -65030,6 +65074,20 @@ var render = function() {
                   "th",
                   {
                     staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Rent /Deposit\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
                       " px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                     attrs: { scope: "col" }
                   },
@@ -65052,9 +65110,7 @@ var render = function() {
                       "\n                        Date Paid\n                    "
                     )
                   ]
-                ),
-                _vm._v(" "),
-                _vm._m(0)
+                )
               ])
             ]),
             _vm._v(" "),
@@ -65179,6 +65235,20 @@ var render = function() {
                     [
                       _vm._v(
                         "\n                        " +
+                          _vm._s(payment.is_deposit ? "Deposit" : "Rent") +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "px-6 py-4 whitespace-nowrap text-gray-500"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
                           _vm._s(payment.month) +
                           "\n                    "
                       )
@@ -65197,9 +65267,7 @@ var render = function() {
                           "\n                    "
                       )
                     ]
-                  ),
-                  _vm._v(" "),
-                  _vm._m(1, true)
+                  )
                 ])
               }),
               0
@@ -65219,40 +65287,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "th",
-      { staticClass: "relative px-6 py-3", attrs: { scope: "col" } },
-      [_c("span", { staticClass: "sr-only" }, [_vm._v("Edit")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "td",
-      {
-        staticClass:
-          "px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
-      },
-      [
-        _c(
-          "a",
-          {
-            staticClass: "text-indigo-600 hover:text-indigo-900",
-            attrs: { href: "#" }
-          },
-          [_vm._v("Edit")]
-        )
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -65307,7 +65342,6 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "py-3" }, [
-            _vm._v("\n            " + _vm._s(_vm.form) + "\n            "),
             _c("form", { staticClass: "space-y-4" }, [
               _c("div", [
                 _c(
@@ -65496,7 +65530,9 @@ var render = function() {
                       attrs: {
                         id: "month",
                         "no-default": true,
-                        "input-pre-filled": true
+                        "input-pre-filled": true,
+                        "default-month": _vm.currentMonth,
+                        "default-year": _vm.currentYear
                       },
                       model: {
                         value: _vm.form.month,
@@ -65832,26 +65868,59 @@ var render = function() {
             "label",
             {
               staticClass: "block text-sm font-medium text-gray-700",
-              attrs: { for: _vm.model }
+              attrs: { for: "building" }
             },
-            [_vm._v(_vm._s(_vm.model))]
+            [_vm._v("Building")]
           ),
           _vm._v(" "),
           _c("multiselect", {
             attrs: {
-              options: _vm.options,
-              id: _vm.model,
+              options: _vm.buildings,
+              id: "building",
               trackBy: "id",
               label: "name",
-              name: _vm.model,
+              placeholder: ""
+            },
+            on: { select: _vm.updateHouses },
+            model: {
+              value: _vm.filters.building,
+              callback: function($$v) {
+                _vm.$set(_vm.filters, "building", $$v)
+              },
+              expression: "filters.building"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-span-2" },
+        [
+          _c(
+            "label",
+            {
+              staticClass: "block text-sm font-medium text-gray-700",
+              attrs: { for: "house" }
+            },
+            [_vm._v("House")]
+          ),
+          _vm._v(" "),
+          _c("multiselect", {
+            attrs: {
+              options: _vm.houses,
+              id: "house",
+              trackBy: "id",
+              label: "name",
               placeholder: ""
             },
             model: {
-              value: _vm.filters.entity,
+              value: _vm.filters.house,
               callback: function($$v) {
-                _vm.$set(_vm.filters, "entity", $$v)
+                _vm.$set(_vm.filters, "house", $$v)
               },
-              expression: "filters.entity"
+              expression: "filters.house"
             }
           })
         ],
@@ -66080,7 +66149,7 @@ var render = function() {
             on: {
               click: function($event) {
                 $event.preventDefault()
-                return _vm.clearFilters($event)
+                return _vm.resetFilters($event)
               }
             }
           },

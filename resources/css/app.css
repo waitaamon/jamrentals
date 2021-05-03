@@ -110,3 +110,12 @@
     animation-duration: .25s;
     animation-fill-mode: both
 }
+
+.month-picker-input {
+    width: 100%;
+    padding: 5px 13px !important;
+}
+
+.month-picker-input-container {
+    width: 100% !important;
+}

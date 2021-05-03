@@ -32222,6 +32222,15 @@ select {
           animation-fill-mode: both
 }
 
+.month-picker-input {
+  width: 100%;
+  padding: 5px 13px !important;
+}
+
+.month-picker-input-container {
+  width: 100% !important;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

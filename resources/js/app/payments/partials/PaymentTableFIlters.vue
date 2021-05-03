@@ -1,14 +1,25 @@
 <template>
     <div class="grid grid-cols-4 gap-4 bg-gray-50 p-2 rounded">
         <div class="col-span-2">
-            <label :for="model" class="block text-sm font-medium text-gray-700">{{ model }}</label>
+            <label for="building" class="block text-sm font-medium text-gray-700">Building</label>
             <multiselect
-                v-model="filters.entity"
-                :options="options"
-                :id="model"
+                v-model="filters.building"
+                :options="buildings"
+                id="building"
                 trackBy="id"
                 label="name"
-                :name="model"
+                placeholder=""
+                @select="updateHouses"
+            ></multiselect>
+        </div>
+        <div class="col-span-2">
+            <label for="house" class="block text-sm font-medium text-gray-700">House</label>
+            <multiselect
+                v-model="filters.house"
+                :options="houses"
+                id="house"
+                trackBy="id"
+                label="name"
                 placeholder=""
             ></multiselect>
         </div>
@@ -96,7 +107,7 @@
             </div>
         </div>
         <div class="col-span-2 flex justify-start items-center">
-            <a @click.prevent="clearFilters" href="#" class="block capitalize text-red-300 text-sm hover:text-red-400">clear
+            <a @click.prevent="resetFilters" href="#" class="block capitalize text-red-300 text-sm hover:text-red-400">clear
                 filters</a>
         </div>
         <div class="col-span-4"></div>
@@ -109,8 +120,9 @@ export default {
     props: ['buildings'],
     data() {
         return {
-            statuses: ['approved', 'deleted'],
+            statuses: ['all', 'rent', 'deposit', 'deleted'],
             filters: {},
+            houses: [],
             masks: {
                 input: 'DD-MM-YYYY',
             },
@@ -125,22 +137,27 @@ export default {
         }
     },
     methods: {
-        clearFilters() {
+        updateHouses(building, id) {
+            this.houses = building.houses
+        },
+        resetFilters() {
             this.filters = {
-                status: 'active',
-                entity: '',
+                building: '',
+                house: '',
+                status: 'all',
                 start: '',
                 end: '',
             }
         },
         applyFilters() {
             let data = {
-                entity: this.filters.entity ? this.filters.entity.id : '',
+                building: this.filters.building ? this.filters.building.id : '',
+                house: this.filters.house ? this.filters.house.id : '',
                 status: this.filters.status,
                 start: this.filters.start ? this.filters.start.toDateString() : '',
                 end: this.filters.end ? this.filters.end.toDateString() : ''
             }
-            console.log(data)
+
             this.$emit('apply-filters', data)
         },
         created() {

@@ -69,6 +69,10 @@
                             Amount
                         </th>
                         <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Rent /Deposit
+                        </th>
+                        <th scope="col"
                             class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Month
                         </th>
@@ -76,9 +80,9 @@
                             class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Date Paid
                         </th>
-                        <th scope="col" class="relative px-6 py-3">
-                            <span class="sr-only">Edit</span>
-                        </th>
+                        <!--                        <th scope="col" class="relative px-6 py-3">-->
+                        <!--                            <span class="sr-only">Edit</span>-->
+                        <!--                        </th>-->
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -99,14 +103,17 @@
                             {{ payment.amount.toLocaleString() }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-gray-500">
+                            {{ payment.is_deposit ? 'Deposit' : 'Rent' }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-500">
                             {{ payment.month }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-gray-500">
                             {{ payment.date_paid }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                        </td>
+                        <!--                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">-->
+                        <!--                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>-->
+                        <!--                        </td>-->
                     </tr>
                     </tbody>
                 </table>
@@ -213,12 +220,11 @@ export default {
         async fetchPayments() {
             try {
                 let response = await axios.get(
-                    `api/payments?per_page=${this.perPage}`+
-                    `&building=${this.filters.building ??= ''}`+
-                    `&house=${this.filters.house ??= ''}`+
-                    `&status=${this.filters.status ??= 'approved'}`+
-                    `&deposit=${this.filters.is_deposit ??= ''}`+
-                    `&start=${this.filters.start ??= ''}`+
+                    `api/payments?per_page=${this.perPage}` +
+                    `&building=${this.filters.building ??= ''}` +
+                    `&house=${this.filters.house ??= ''}` +
+                    `&status=${this.filters.status ??= 'all'}` +
+                    `&start=${this.filters.start ??= ''}` +
                     `&end=${this.filters.end ??= ''}`
                 )
                 this.payments = response.data.data

@@ -21,8 +21,8 @@ class CreatePaymentsTable extends Migration
             $table->string('tenant');
             $table->bigInteger('amount');
             $table->boolean('is_deposit')->default(false);
-            $table->date('month')->default(today('Africa/Nairobi'));
-            $table->date('date_paid')->default(today('Africa/Nairobi'));
+            $table->date('month');
+            $table->date('date_paid');
             $table->string('status')->default('approved');
             $table->text('note')->nullable();
             $table->timestamps();

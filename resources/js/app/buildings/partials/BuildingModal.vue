@@ -75,7 +75,11 @@ export default {
             })
                 .then(response => {
                     this.resetForm()
+
                     this.$emit('fetch-buildings', true)
+
+                    this.$toast.success('Successfully saved building.');
+
                     if (this.closeAfterSave) {
                         this.showModal = false
                     }

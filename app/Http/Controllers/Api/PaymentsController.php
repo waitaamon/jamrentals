@@ -23,13 +23,16 @@ class PaymentsController extends Controller
 
     public function index()
     {
-        $payments = Payment::query()
-            ->when(request()->filled('deposit'), fn($query) => $query->where('is_deposit', (bool)request()->get('deposit')))
+
+        $paymentQuery = request()->get('status') == 'deleted' ? Payment::onlyTrashed() : Payment::query();
+
+        $payments = $paymentQuery
+            ->when((request()->get('status') == 'deposit'), fn($query) => $query->where('is_deposit', true))
+            ->when((request()->get('status') == 'rent'), fn($query) => $query->where('is_deposit', false))
             ->when(request()->filled('building'), fn($query) => $query->whereHas('house', fn($query) => $query->where('building_id', request()->get('building'))))
             ->when(request()->filled('house'), fn($query) => $query->where('house_id', request()->get('house')))
-            ->when(request()->filled('from'), fn($query) => $query->where('month', '>=', request()->get('from')))
-            ->when(request()->filled('to'), fn($query) => $query->where('month', '<=', request()->get('to')))
-            ->when(request()->filled('status'), fn($query) => $query->where('status', request()->get('status')))
+            ->when(request()->filled('start'), fn($query) => $query->whereDate('month', '>=', Carbon::parse(request()->get('start'))))
+            ->when(request()->filled('end'), fn($query) => $query->whereDate('month', '<=', Carbon::parse(request()->get('end'))))
             ->paginate(request()->get('per_page'));
 
         return response(new PaymentCollection($payments));

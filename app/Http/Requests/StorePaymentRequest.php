@@ -15,6 +15,7 @@ class StorePaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'building' => 'required|integer|exists:buildings,id',
             'house' => 'required|integer|exists:houses,id',
             'amount' => 'required|numeric|min:0',
             'tenant' => 'required|string|max:254',

@@ -18,7 +18,7 @@ class PaymentResource extends JsonResource
             'amount' => $this->amount,
             'is_deposit' => (bool)$this->is_deposit,
             'month' => $this->month->format('M-Y'),
-            'date_paid' => $this->month->format('d-M-Y'),
+            'date_paid' => $this->date_paid->format('d-M-Y'),
             'status' => $this->status,
             'created_at' => $this->created_at->format('d-m-Y H:i:s'),
             'user' => new UserResource($this->whenLoaded('user')),

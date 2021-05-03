@@ -11,7 +11,6 @@
 
         <Modal v-model="showModal" modalClass="max-width: 700px" title="New Rent Payment">
             <div class="py-3">
-                {{ form }}
                 <form class="space-y-4">
                     <div>
                         <label for="building" class="block text-sm font-medium text-gray-700">Building</label>
@@ -67,6 +66,8 @@
                                 class="w-full"
                                 :no-default="true"
                                 :input-pre-filled="true"
+                                :default-month="currentMonth"
+                                :default-year="currentYear"
                                 v-model="form.month"
                             ></month-picker-input>
 
@@ -175,15 +176,33 @@ export default {
             }
         }
     },
+    computed: {
+        currentMonth() {
+            let date = new Date();
+            return date.getMonth() + 1
+        },
+        currentYear() {
+            let date = new Date();
+            return date.getFullYear()
+        },
+    },
     methods: {
         submit() {
+            this.errors = {}
             axios.post('api/payments', {
                 ...this.form,
-                house: this.form.house ? this.form.house.id : ''
+                building: this.form.building ? this.form.building.id : '',
+                house: this.form.house ? this.form.house.id : '',
+                tenant: this.form.house ? this.form.house.tenant : '',
+                month: this.month ? `${month.year}-${month.monthIndex}-01` : `${this.currentYear}-${this.currentMonth}-01`
             })
                 .then(response => {
                     this.resetForm()
+
                     this.$emit('fetch-payments', true)
+
+                    this.$toast.success('Successfully saved payment.');
+
                     if (this.closeAfterSave) {
                         this.showModal = false
                     }
