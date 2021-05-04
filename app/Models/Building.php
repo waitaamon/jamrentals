@@ -36,4 +36,9 @@ class Building extends Model
     {
         return $this->hasManyThrough(Invoice::class, House::class);
     }
+
+    public function monthlyReports(): HasMany
+    {
+        return $this->hasMany(MonthlyReport::class);
+    }
 }
