@@ -16,6 +16,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('payments', [\App\Http\Controllers\PaymentController::class, 'index'])->name('payment.index');
     Route::get('payments/{id}', [\App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
 
+    Route::get('reports', \App\Http\Controllers\ReportController::class)->name('report.index');
+
     //Api
 
     Route::apiResource('api/buildings', \App\Http\Controllers\Api\BuildingsController::class);
