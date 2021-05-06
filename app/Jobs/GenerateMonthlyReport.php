@@ -18,10 +18,19 @@ class GenerateMonthlyReport implements ShouldQueue
     {
         Building::with('vacantHouses', 'invoices')->get()
             ->each(function ($building) {
+
+                $month = new Carbon('first day of this month');
+
+                $invoices = $building->invoices()
+                    ->where('amount', '>', 0)
+                    ->whereColumn('amount', '>', 'paid')
+                    ->whereMonth('month', $month->format('m'))
+                    ->get();
+
                 $building->monthlyReports()->create([
-                    'month' => new Carbon('first day of this month'),
+                    'month' => $month,
                     'vacant_houses' => json_encode($building->vacantHouses),
-                    'debtors' => json_encode()
+                    'debtors' => json_encode($invoices)
                 ]);
             });
     }
