@@ -10,7 +10,7 @@ class Invoice extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['house_id', 'tenant', 'amount', 'paid', 'month', 'status'];
+    protected $fillable = ['house_id', 'tenant_id', 'amount', 'paid', 'balance', 'month', 'status'];
 
     protected $appends = ['is_paid'];
 
@@ -19,8 +19,13 @@ class Invoice extends Model
         return $this->belongsTo(House::class);
     }
 
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
+    }
+
     public function getIsPaidAttribute(): bool
     {
-        return (int)$this->amount == (int)$this->paid;
+        return (int)$this->balance == 0;
     }
 }

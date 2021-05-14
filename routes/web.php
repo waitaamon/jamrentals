@@ -34,6 +34,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('api/payments-reverse', [\App\Http\Controllers\Api\PaymentActionsController::class, 'reverse']);
     Route::post('api/payments-export-excel', [\App\Http\Controllers\Api\PaymentActionsController::class, 'exportExcel']);
 
+    Route::get('api/report', \App\Http\Controllers\Api\ReportsController::class);
+
 });
 
 require __DIR__ . '/auth.php';

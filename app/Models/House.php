@@ -10,7 +10,7 @@ class House extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['building_id', 'name', 'rent', 'deposit', 'tenant', 'tenant_phone', 'tenant_id', 'is_occupied'];
+    protected $fillable = ['building_id', 'name', 'rent', 'deposit', 'is_occupied', 'note'];
 
     public function building(): BelongsTo
     {

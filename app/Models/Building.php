@@ -10,7 +10,7 @@ class Building extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'location', 'default_rent', 'default_deposit', 'attributes'];
+    protected $fillable = ['name', 'location', 'default_rent', 'default_deposit', 'attributes', 'note'];
 
     public function houses(): HasMany
     {
@@ -27,6 +27,11 @@ class Building extends Model
         return $this->hasMany(House::class)->vacant();
     }
 
+    public function tenants(): HasManyThrough
+    {
+        return $this->hasManyThrough(Tenant::class, House::class);
+    }
+
     public function payments(): HasManyThrough
     {
         return $this->hasManyThrough(Payment::class, House::class);
@@ -37,8 +42,4 @@ class Building extends Model
         return $this->hasManyThrough(Invoice::class, House::class);
     }
 
-    public function monthlyReports(): HasMany
-    {
-        return $this->hasMany(MonthlyReport::class);
-    }
 }

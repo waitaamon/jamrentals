@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHousesTable extends Migration
+class CreateTenantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateHousesTable extends Migration
      */
     public function up()
     {
-        Schema::create('houses', function (Blueprint $table) {
+        Schema::create('tenants', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('building_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('house_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->bigInteger('rent');
+            $table->string('id_number')->nullable();
+            $table->string('phone')->nullable();
             $table->bigInteger('deposit')->nullable();
-            $table->boolean('is_occupied')->default(false);
+            $table->bigInteger('incurred_cost')->nullable();
+            $table->bigInteger('balance')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -33,6 +35,6 @@ class CreateHousesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('houses');
+        Schema::dropIfExists('tenants');
     }
 }

@@ -20,6 +20,7 @@ class CreateBuildingsTable extends Migration
             $table->bigInteger('default_rent')->nullable();
             $table->bigInteger('default_deposit')->nullable();
             $table->json('attributes')->nullable();
+            $table->text('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
