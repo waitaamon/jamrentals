@@ -16,12 +16,9 @@ class StoreHouseRequest extends FormRequest
     {
         return [
             'building' => 'required|integer|exists:buildings,id',
-            'name' => 'required|string|max:254',
+            'name' => 'required|string|max:254|unique:houses,name',
             'rent' => 'required|numeric|min:0',
             'deposit' => 'required|numeric|min:0',
-            'tenant' => 'nullable|string|max:254',
-            'tenant_phone' => 'nullable|string|max:254',
-            'tenant_id' => 'nullable|string|max:254',
         ];
     }
 }

@@ -82,7 +82,10 @@ export default {
 
                     if (this.closeAfterSave) {
                         this.showModal = false
+                        return
                     }
+                    this.closeAfterSave = true
+
                 }).catch(e => {
                 if (e.response.status === 422) {
                     this.errors = e.response.data.errors

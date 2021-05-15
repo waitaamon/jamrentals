@@ -22,10 +22,9 @@ class HousesController extends Controller
     public function store(StoreHouseRequest $request)
     {
         $house = House::create(array_merge(
-            $request->only('name', 'rent', 'deposit', 'tenant', 'tenant_phone', 'tenant_id'),
+            $request->only('name', 'rent', 'deposit', 'note'),
             [
-                'building_id' => $request->building,
-                'is_occupied' => $request->filled('tenant')
+                'building_id' => $request->building
             ]
         ));
 
@@ -34,7 +33,7 @@ class HousesController extends Controller
 
     public function show(int $id)
     {
-        $house = House::with('building', 'approvedPayments')->findOrFail($id);
+        $house = House::with('building', 'approvedPayments', 'tenant')->findOrFail($id);
 
         return response(new HouseResource($house));
     }
@@ -44,10 +43,9 @@ class HousesController extends Controller
         $house = House::findOrFail($id);
 
         $house->update(array_merge(
-            $request->only('name', 'rent', 'deposit', 'tenant', 'tenant_phone', 'tenant_id'),
+            $request->only('name', 'rent', 'deposit', 'note'),
             [
                 'building_id' => $request->building,
-                'is_occupied' => $request->filled('tenant')
             ]
         ));
 

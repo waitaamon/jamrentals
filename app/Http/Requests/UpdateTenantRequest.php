@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests;
 
-class UpdateHouseRequest extends StoreHouseRequest
+class UpdateTenantRequest extends StoreTenantRequest
 {
-
     public function rules(): array
     {
         return array_merge(parent::rules(), [

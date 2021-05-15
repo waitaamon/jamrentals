@@ -26,4 +26,9 @@ class Tenant extends Model
     {
         return $this->hasMany(Invoice::class);
     }
+
+    public function hasBalance(): bool
+    {
+        return $this->invoices()->where('balance', '>',0)->exists();
+    }
 }

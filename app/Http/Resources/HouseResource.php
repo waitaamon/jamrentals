@@ -11,16 +11,16 @@ class HouseResource extends JsonResource
         return [
             'id' => $this->id,
             'building' => new BuildingResource($this->whenLoaded('building')),
+            'tenant' => new TenantResource($this->whenLoaded('tenant')),
             'building_name' => $this->building->name,
             'name' => $this->name,
             'rent' => $this->rent ?: '',
             'deposit' => $this->deposit ?: '',
-            'tenant' => $this->tenant ?: '',
-            'tenant_phone' => $this->tenant_phone ?: '',
-            'tenant_id' => $this->tenant_id ?: '',
+            'note' => $this->note ?: '',
             'is_occupied' => (bool) $this->is_occupied,
             'payments' => PaymentResource::collection($this->whenLoaded('approvedPayments')),
             'payments_sum' => $this->approved_payments_sum_amount ?: 0,
+            'unpaid_rent' => $this->approved_payments_sum_amount ?: 0,
             'created_at' => $this->created_at->format('d-M-Y')
         ];
     }

@@ -13,20 +13,14 @@
                 <form class="space-y-3">
                     <app-input v-model="form.name" name="name" :error="errors.name ? errors.name[0] : null"/>
 
-                    <app-input v-model="form.tenant" name="tenant" :error="errors.tenant ? errors.tenant[0] : null"/>
-
-                    <app-input v-model="form.tenant_phone" name="tenant_phone"
-                               :error="errors.tenant_phone ? errors.tenant_phone[0] : null"/>
-
-                    <app-input v-model="form.tenant_id" name="tenant_id"
-                               :error="errors.tenant_id ? errors.tenant_id[0] : null"/>
-
 
                     <app-input v-model="form.rent" name="rent" type="number"
                                :error="errors.rent ? errors.rent[0] : null"/>
 
                     <app-input v-model="form.deposit" name="deposit" type="number"
                                :error="errors.deposit ? errors.deposit[0] : null"/>
+
+                    <app-textarea v-model="form.note" name="note" :error="errors.note ? errors.note[0] : null"/>
 
                     <div class="flex justify-end space-x-2">
                         <button
@@ -53,10 +47,11 @@
 
 <script>
 import AppInput from "../../../components/inputs/AppInput";
+import AppTextarea from "../../../components/inputs/AppTextarea";
 
 export default {
     name: 'house-modal',
-    components: {AppInput},
+    components: {AppTextarea, AppInput},
     props: ['building'],
     data() {
         return {
@@ -103,9 +98,7 @@ export default {
             this.form = {
                 building: this.building.id,
                 name: '',
-                tenant: '',
-                tenant_phone: '',
-                tenant_id: '',
+                note: '',
                 rent: this.building.default_rent,
                 deposit: this.building.default_deposit,
             }
@@ -115,9 +108,7 @@ export default {
             this.form = {
                 building: this.building.id,
                 name: this.house ? this.house.name : '',
-                tenant: this.house ? this.house.tenant : '',
-                tenant_phone: this.house ? this.house.tenant_phone : '',
-                tenant_id: this.house ? this.house.tenant_id : '',
+                note: this.house ? this.house.note : '',
                 rent: this.house ? this.house.rent : this.building.default_rent,
                 deposit: this.house ? this.house.deposit : this.building.default_deposit,
             }

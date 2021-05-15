@@ -17,7 +17,8 @@
                         <h2 class="text-lg text-gray-700">Houses</h2>
 
                         <div class="mt-4">
-                            <houses-list :building="{{ $building }}"></houses-list>
+                            <building-show></building-show>
+{{--                            <houses-list :building="{{ $building }}"></houses-list>--}}
                         </div>
                     </div>
                 </div>
