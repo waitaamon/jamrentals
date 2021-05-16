@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\TenantsCollection;
 use App\Models\{House, Tenant};
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TenantResource;
@@ -11,9 +12,12 @@ class TenantsController extends Controller
 {
     public function index()
     {
-        $tenants = Tenant::all();
+        $tenants = Tenant::query()
+            ->withSum('approvedPayments', 'amount')
+            ->when(request()->filled('building'), fn($query) => $query->whereHas('house.building', fn($query) => $query->where('id', request()->get('building'))))
+            ->paginate(request()->get('per_page'));
 
-        return response(TenantResource::collection($tenants));
+        return response(new TenantsCollection($tenants));
     }
 
     public function store(StoreTenantRequest $request)

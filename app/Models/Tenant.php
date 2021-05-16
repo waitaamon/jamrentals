@@ -12,6 +12,8 @@ class Tenant extends Model
 
     protected $fillable = ['house_id', 'name', 'id_number', 'phone', 'deposit', 'incurred_cost', 'balance', 'note'];
 
+    protected $appends = ['balance'];
+
     public function house(): BelongsTo
     {
         return $this->belongsTo(House::class);
@@ -22,6 +24,11 @@ class Tenant extends Model
         return $this->hasMany(Payment::class);
     }
 
+    public function approvedPayments()
+    {
+        return $this->payments()->approved();
+    }
+
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class);
@@ -30,5 +37,10 @@ class Tenant extends Model
     public function hasBalance(): bool
     {
         return $this->invoices()->where('balance', '>',0)->exists();
+    }
+
+    public function getBalanceAttribute()
+    {
+        
     }
 }

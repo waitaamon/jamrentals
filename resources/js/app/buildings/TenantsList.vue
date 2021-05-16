@@ -12,7 +12,7 @@
                     </button>
                 </app-drop-down>
             </div>
-            <house-modal :building="building" @fetch-houses="fetchHouses" ref="houseModal"/>
+            <tenant-modal :building="building" @fetch-tenants="fetchTenants" ref="tenantModal"/>
         </div>
         <div class="mt-3">
             <div class="overflow-hidden border-b border-gray-200 sm:rounded">
@@ -29,19 +29,19 @@
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Tenant
+                            House
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Rent
+                            Id Number
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Deposit
+                            Phone Number
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Is Occupied
+                            Balance
                         </th>
                         <th scope="col" class="relative px-6 py-3">
                             <span class="sr-only">Edit</span>
@@ -49,31 +49,33 @@
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                    <tr v-for="house in houses" :key="house.id">
+                    <tr v-for="tenant in tenants" :key="tenant.id">
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            <input type="checkbox" v-model="selected" :value="house.id">
+                            <input type="checkbox" v-model="selected" :value="tenant.id">
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 capitalize">
-                            {{ house.name }}
+                            {{ tenant.name }}
                         </td>
+
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {{ house.tenant }}
+                            {{ tenant.house_name }}
                         </td>
+
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {{ house.rent.toLocaleString() }}
+                            {{ tenant.id_number }}
                         </td>
+
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {{ house.deposit.toLocaleString() }}
+                            {{ tenant.phone }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-green-500">
-                            <span :class="{'text-red-500': !house.is_occupied}">{{
-                                    house.is_occupied ? 'Occupied' : 'Vacant'
-                                }}</span>
+
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ tenant.deposit.toLocaleString() }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                            <a :href="`/houses/${house.id}`" class="text-indigo-600 hover:text-indigo-900">View</a>
+                            <a :href="`/tenants/${tenant.id}`" class="text-indigo-600 hover:text-indigo-900">View</a>
                             <a href="#" class="text-red-300 hover:text-red-500"
-                               @click.prevent="editHouse(house)">Edit</a>
+                               @click.prevent="editTenant(tenant)">Edit</a>
                         </td>
                     </tr>
                     </tbody>
@@ -87,16 +89,16 @@
 
 <script>
 import TablePagination from "../../components/TablePagination";
-import HouseModal from "./partials/HouseModal";
 import AppDropDown from "../../components/Appdropdown";
+import TenantModal from "./partials/TenantModal";
 
 export default {
-    name: 'houses-list',
-    components: {AppDropDown, HouseModal, TablePagination},
+    name: 'tenants-list',
+    components: {TenantModal, AppDropDown, TablePagination},
     props: ['building'],
     data() {
         return {
-            houses: [],
+            tenants: [],
             paginationData: {},
             perPage: 50,
             selected: [],
@@ -106,22 +108,22 @@ export default {
     watch: {
         selectAll: {
             handler: function (val) {
-                this.selected = val ? this.houses.map(house => house.id) : []
+                this.selected = val ? this.tenants.map(tenant => tenant.id) : []
             }
         }
     },
     methods: {
         applyPagination(data) {
-            this.houses = data.data
+            this.tenants = data.data
             this.paginationData = data.pagination
         },
         applyPerPage(data) {
             this.perPage = data
-            this.fetchHouses()
+            this.fetchTenants()
         },
-        editHouse(house) {
-            this.$refs.houseModal.house = house
-            this.$refs.houseModal.showModal = true
+        editTenant(tenant) {
+            this.$refs.tenantModal.tenant = tenant
+            this.$refs.tenantModal.showModal = true
         },
 
         async markVacant() {
@@ -130,34 +132,29 @@ export default {
                 return
             }
             try {
-                await axios.post('/api/house-mark-vacant', {
-                    houses: this.selected
+                await axios.post('/api/tenant-mark-vacant', {
+                    tenants: this.selected
                 })
 
-                await this.fetchHouses()
+                await this.fetchTenants()
 
-                this.$toast.success('Successfully marked selected houses as vacant');
+                this.$toast.success('Successfully marked selected tenants as vacant');
             } catch (e) {
-                this.$toast.error('Could not mark houses as vacant');
+                this.$toast.error('Could not mark tenants as vacant');
             }
         },
-        async fetchHouses() {
+        async fetchTenants() {
             try {
-                let response = await axios.get(`/api/houses?per_page=${this.perPage}&building=${this.building.id}`)
-
-                this.houses = response.data.data
-
+                let response = await axios.get(`/api/tenants?per_page=${this.perPage}&building=${this.building.id}`)
+                this.tenants = response.data.data
                 this.paginationData = response.data.pagination
-
-                this.$root.$emit('housesUpdated', this.houses);
-
             } catch (e) {
                 this.$toast.error('Something went wrong try again later');
             }
         }
     },
     created() {
-        this.fetchHouses()
+        this.fetchTenants()
     }
 }
 </script>

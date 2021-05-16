@@ -14,7 +14,7 @@ class BuildingController extends Controller
     public function show(int $id)
     {
         $building = Building::query()
-            ->with('houses')
+            ->with('vacantHouses')
             ->withCount(['houses', 'OccupiedHouses', 'vacantHouses'])
             ->findOrFail($id);
 

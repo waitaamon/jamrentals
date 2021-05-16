@@ -14,11 +14,8 @@
                     @include('buildings.partials.stats')
 
                     <div class="mt-4 w-full">
-                        <h2 class="text-lg text-gray-700">Houses</h2>
-
                         <div class="mt-4">
-                            <building-show></building-show>
-{{--                            <houses-list :building="{{ $building }}"></houses-list>--}}
+                            <building-show :building="{{ $building }}"></building-show>
                         </div>
                     </div>
                 </div>
