@@ -12,6 +12,7 @@ class HouseResource extends JsonResource
             'id' => $this->id,
             'building' => new BuildingResource($this->whenLoaded('building')),
             'tenant' => new TenantResource($this->whenLoaded('tenant')),
+            'tenant_name' => $this->is_occuped ? $this->tenant->name : '',
             'building_name' => $this->building->name,
             'name' => $this->name,
             'rent' => $this->rent ?: '',

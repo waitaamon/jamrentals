@@ -87,7 +87,7 @@ export default {
         }
     },
     watch: {
-        'form.house' : {
+        'form.house': {
             handler: function () {
                 this.form.deposit = this.form.house.deposit
             }
@@ -100,7 +100,7 @@ export default {
                 url: this.tenant ? `/api/tenants/${this.tenant.id}` : `/api/tenants`,
                 data: {
                     ...this.form,
-                    house: typeof this.form.house === 'object' ? this.form.house.id : this.form.house
+                    house: this.form.house.id
                 }
             })
                 .then(response => {
@@ -141,7 +141,7 @@ export default {
         setDefaults() {
 
             this.form = {
-                house: this.tenant ? this.tenant.house_id : '',
+                house: this.tenant ? this.houses.find(house => house.id === this.tenant.house_id) : '',
                 name: this.tenant ? this.tenant.name : '',
                 phone: this.tenant ? this.tenant.phone : '',
                 id_number: this.tenant ? this.tenant.id_number : '',

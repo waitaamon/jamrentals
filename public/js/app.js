@@ -2854,8 +2854,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_inputs_AppInput__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/inputs/AppInput */ "./resources/js/components/inputs/AppInput.vue");
 /* harmony import */ var _components_inputs_AppTextarea__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/inputs/AppTextarea */ "./resources/js/components/inputs/AppTextarea.vue");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2966,7 +2964,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         method: this.tenant ? 'patch' : 'post',
         url: this.tenant ? "/api/tenants/".concat(this.tenant.id) : "/api/tenants",
         data: _objectSpread(_objectSpread({}, this.form), {}, {
-          house: _typeof(this.form.house) === 'object' ? this.form.house.id : this.form.house
+          house: this.form.house.id
         })
       }).then(function (response) {
         _this.resetForm();
@@ -3006,8 +3004,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
     },
     setDefaults: function setDefaults() {
+      var _this2 = this;
+
       this.form = {
-        house: this.tenant ? this.tenant.house_id : '',
+        house: this.tenant ? this.houses.find(function (house) {
+          return house.id === _this2.tenant.house_id;
+        }) : '',
         name: this.tenant ? this.tenant.name : '',
         phone: this.tenant ? this.tenant.phone : '',
         id_number: this.tenant ? this.tenant.id_number : '',
@@ -3018,10 +3020,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this3 = this;
 
     this.$root.$on('housesUpdated', function (data) {
-      _this2.houses = data.filter(function (house) {
+      _this3.houses = data.filter(function (house) {
         return !house.is_occupied;
       });
     });
@@ -65998,7 +66000,7 @@ var render = function() {
                     [
                       _vm._v(
                         "\n                        " +
-                          _vm._s(house.tenant) +
+                          _vm._s(house.tenant_name) +
                           "\n                    "
                       )
                     ]
@@ -66501,7 +66503,7 @@ var render = function() {
                     [
                       _vm._v(
                         "\n                        " +
-                          _vm._s(tenant.deposit.toLocaleString()) +
+                          _vm._s(tenant.balance.toLocaleString()) +
                           "\n                    "
                       )
                     ]

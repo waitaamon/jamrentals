@@ -41,6 +41,6 @@ class Tenant extends Model
 
     public function getBalanceAttribute()
     {
-        
+        return $this->invoices()->sum('balance');
     }
 }
