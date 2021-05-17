@@ -2129,6 +2129,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -2256,6 +2258,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2, null, [[0, 9]]);
       }))();
     }
+  },
+  mounted: function mounted() {
+    var _this3 = this;
+
+    this.$root.$on('tenantUpdated', function (data) {
+      _this3.fetchHouses();
+    });
   },
   created: function created() {
     this.fetchHouses();
@@ -2966,6 +2975,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.$emit('fetch-tenants', true);
 
+        _this.$root.$emit('tenantUpdated', _this.houses);
+
         _this.$toast.success('Successfully saved tenant.');
 
         _this.showModal = !_this.closeAfterSave;
@@ -3010,8 +3021,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         phone: this.tenant ? this.tenant.phone : '',
         id_number: this.tenant ? this.tenant.id_number : '',
         note: this.tenant ? this.tenant.note : '',
-        incurred_cost: this.tenant ? this.tenant.incurred_cost : '',
-        deposit: this.tenant ? this.tenant.deposit : ''
+        incurred_cost: this.tenant ? this.tenant.incurred_cost : 0,
+        deposit: this.tenant ? this.tenant.deposit : 0
       };
     }
   },

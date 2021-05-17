@@ -108,6 +108,8 @@ export default {
 
                     this.$emit('fetch-tenants', true)
 
+                    this.$root.$emit('tenantUpdated', this.houses);
+
                     this.$toast.success('Successfully saved tenant.');
 
                     this.showModal = !this.closeAfterSave
@@ -148,8 +150,8 @@ export default {
                 phone: this.tenant ? this.tenant.phone : '',
                 id_number: this.tenant ? this.tenant.id_number : '',
                 note: this.tenant ? this.tenant.note : '',
-                incurred_cost: this.tenant ? this.tenant.incurred_cost : '',
-                deposit: this.tenant ? this.tenant.deposit : '',
+                incurred_cost: this.tenant ? this.tenant.incurred_cost : 0,
+                deposit: this.tenant ? this.tenant.deposit : 0,
             }
 
         }

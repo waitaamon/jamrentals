@@ -6,7 +6,9 @@
                     <button @click.prevent="markVacant"
                             class="block flex items-center space-x-2 class = 'block flex w-full px-4 py-2 space-x-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900'">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd"
+                                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                  clip-rule="evenodd"/>
                         </svg>
                         <span>Mark as Vacant</span>
                     </button>
@@ -155,6 +157,11 @@ export default {
                 this.$toast.error('Something went wrong try again later');
             }
         }
+    },
+    mounted() {
+        this.$root.$on('tenantUpdated', data => {
+            this.fetchHouses()
+        });
     },
     created() {
         this.fetchHouses()
