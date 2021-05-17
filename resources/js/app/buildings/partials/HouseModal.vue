@@ -39,7 +39,7 @@
                         </button>
                     </div>
                 </form>
-
+                {{ closeAfterSave }}
             </div>
         </Modal>
     </div>
@@ -76,9 +76,10 @@ export default {
 
                     this.$toast.success('Successfully saved house.');
 
-                    if (this.closeAfterSave) {
-                        this.showModal = false
-                    }
+                    this.showModal = !this.closeAfterSave
+
+                    this.closeAfterSave = true
+
                 }).catch(e => {
                 if (e.response.status === 422) {
                     this.errors = e.response.data.errors

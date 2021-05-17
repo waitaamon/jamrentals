@@ -80,10 +80,8 @@ export default {
 
                     this.$toast.success('Successfully saved building.');
 
-                    if (this.closeAfterSave) {
-                        this.showModal = false
-                        return
-                    }
+                    this.showModal = !this.closeAfterSave
+
                     this.closeAfterSave = true
 
                 }).catch(e => {

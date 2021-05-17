@@ -2661,11 +2661,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$toast.success('Successfully saved building.');
 
-        if (_this.closeAfterSave) {
-          _this.showModal = false;
-          return;
-        }
-
+        _this.showModal = !_this.closeAfterSave;
         _this.closeAfterSave = true;
       })["catch"](function (e) {
         if (e.response.status === 422) {
@@ -2797,9 +2793,8 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$toast.success('Successfully saved house.');
 
-        if (_this.closeAfterSave) {
-          _this.showModal = false;
-        }
+        _this.showModal = !_this.closeAfterSave;
+        _this.closeAfterSave = true;
       })["catch"](function (e) {
         if (e.response.status === 422) {
           _this.errors = e.response.data.errors;
@@ -2974,6 +2969,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.$toast.success('Successfully saved tenant.');
 
         _this.showModal = !_this.closeAfterSave;
+        _this.closeAfterSave = true;
       })["catch"](function (e) {
         if (e.response.status === 422) {
           _this.errors = e.response.data.errors;
@@ -3604,9 +3600,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.$toast.success('Successfully saved payment.');
 
-        if (_this.closeAfterSave) {
-          _this.showModal = false;
-        }
+        _this.showModal = !_this.closeAfterSave;
+        _this.closeAfterSave = true;
       })["catch"](function (e) {
         if (e.response.status === 422) {
           _this.errors = e.response.data.errors;
@@ -66895,7 +66890,8 @@ var render = function() {
                 ])
               ],
               1
-            )
+            ),
+            _vm._v("\n            " + _vm._s(_vm.closeAfterSave) + "\n        ")
           ])
         ]
       )
