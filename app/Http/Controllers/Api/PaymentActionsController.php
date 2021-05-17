@@ -10,13 +10,22 @@ use App\Http\Controllers\Controller;
 
 class PaymentActionsController extends Controller
 {
-    public function bulkDelete(Request $request)
+    public function reverse(Request $request)
     {
         Payment::find($request->get('payments'))
             ->each(function ($payment) {
-                $payment->update(['status' => 'deleted', 'deleted_by' => auth()->id()]);
-                $payment->delete();
+                $payment->update([
+                    'status' => 'reversed',
+                    'reversed_by' => auth()->id(),
+                    'reversed_on' => now(),
+                    'note' => ''
+                ]);
             });
+    }
+
+    public function printReceipt(int $id)
+    {
+
     }
 
     public function exportExcel(Request $request)

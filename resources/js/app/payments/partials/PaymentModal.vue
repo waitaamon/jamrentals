@@ -111,13 +111,7 @@
                             {{ errors.date_paid[0] }}
                         </p>
                     </div>
-                    <div class="flex items-center">
-                        <input v-model="form.is_deposit" id="is_deposit" name="is_deposit" type="checkbox"
-                               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="is_deposit" class="ml-2 block text-sm text-gray-900">
-                            Is deposit
-                        </label>
-                    </div>
+
                     <div>
                         <label for="note" class="block text-sm font-medium text-gray-700">Note</label>
                         <div class="mt-1">
@@ -193,7 +187,6 @@ export default {
                 ...this.form,
                 building: this.form.building ? this.form.building.id : '',
                 house: this.form.house ? this.form.house.id : '',
-                tenant: this.form.house ? this.form.house.tenant : '',
                 month: this.month ? `${month.year}-${month.monthIndex}-01` : `${this.currentYear}-${this.currentMonth}-01`
             })
                 .then(response => {
@@ -227,7 +220,6 @@ export default {
                 date_paid: new Date(),
                 month: '',
                 note: '',
-                is_deposit: false
             }
         }
     },

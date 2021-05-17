@@ -29,7 +29,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('api/payment-prerequisites', [App\Http\Controllers\Api\PaymentsController::class, 'prerequisites']);
     Route::post('api/payment-export-excel', [App\Http\Controllers\Api\PaymentActionsController::class, 'exportExcel']);
-    Route::post('api/payment-bulk-delete', [App\Http\Controllers\Api\PaymentActionsController::class, 'bulkDelete']);
+    Route::post('api/reverse-payments', [App\Http\Controllers\Api\PaymentActionsController::class, 'reverse']);
+    Route::get('api/print-payment-receipt/{id}', [App\Http\Controllers\Api\PaymentActionsController::class, 'printReceipt']);
     Route::apiResource('api/payments', \App\Http\Controllers\Api\PaymentsController::class);
 
     Route::post('api/payments-reverse', [\App\Http\Controllers\Api\PaymentActionsController::class, 'reverse']);

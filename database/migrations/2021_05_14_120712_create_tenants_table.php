@@ -23,6 +23,7 @@ class CreateTenantsTable extends Migration
             $table->bigInteger('incurred_cost')->default(0);
             $table->bigInteger('balance')->default(0);
             $table->text('note')->nullable();
+            $table->string('status')->default('active');
             $table->timestamps();
             $table->softDeletes();
         });

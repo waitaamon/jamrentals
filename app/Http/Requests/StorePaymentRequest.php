@@ -18,8 +18,6 @@ class StorePaymentRequest extends FormRequest
             'building' => 'required|integer|exists:buildings,id',
             'house' => 'required|integer|exists:houses,id',
             'amount' => 'required|numeric|min:0',
-            'tenant' => 'required|string|max:254',
-            'is_deposit' => 'required|boolean',
             'month' => 'required|date',
             'date_paid' => 'required|date',
             'note' => 'nullable|string|max:500'

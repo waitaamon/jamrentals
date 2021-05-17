@@ -2768,7 +2768,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3188,6 +3187,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3298,7 +3306,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _this2.$toast.error('Something went wrong try again later');
       });
     },
-    deleteSelected: function deleteSelected() {
+    printReceipt: function printReceipt(payment) {},
+    reverseSelected: function reverseSelected() {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
@@ -3318,7 +3327,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _context2.prev = 3;
                 _context2.next = 6;
-                return axios.post("api/payment-bulk-delete", {
+                return axios.post("api/reverse-payments", {
                   payments: _this3.selected
                 });
 
@@ -3348,7 +3357,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var _this4$filters, _this4$filters$buildi, _this4$filters2, _this4$filters2$house, _this4$filters3, _this4$filters3$statu, _this4$filters4, _this4$filters4$start, _this4$filters5, _this4$filters5$end, response;
+        var _this4$filters, _this4$filters$buildi, _this4$filters2, _this4$filters2$house, _this4$filters3, _this4$filters3$statu, _this4$filters4, _this4$filters4$from, _this4$filters5, _this4$filters5$to, response;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
@@ -3356,7 +3365,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return axios.get("api/payments?per_page=".concat(_this4.perPage) + "&building=".concat((_this4$filters$buildi = (_this4$filters = _this4.filters).building) !== null && _this4$filters$buildi !== void 0 ? _this4$filters$buildi : _this4$filters.building = '') + "&house=".concat((_this4$filters2$house = (_this4$filters2 = _this4.filters).house) !== null && _this4$filters2$house !== void 0 ? _this4$filters2$house : _this4$filters2.house = '') + "&status=".concat((_this4$filters3$statu = (_this4$filters3 = _this4.filters).status) !== null && _this4$filters3$statu !== void 0 ? _this4$filters3$statu : _this4$filters3.status = 'all') + "&start=".concat((_this4$filters4$start = (_this4$filters4 = _this4.filters).start) !== null && _this4$filters4$start !== void 0 ? _this4$filters4$start : _this4$filters4.start = '') + "&end=".concat((_this4$filters5$end = (_this4$filters5 = _this4.filters).end) !== null && _this4$filters5$end !== void 0 ? _this4$filters5$end : _this4$filters5.end = ''));
+                return axios.get("api/payments?per_page=".concat(_this4.perPage) + "&building=".concat((_this4$filters$buildi = (_this4$filters = _this4.filters).building) !== null && _this4$filters$buildi !== void 0 ? _this4$filters$buildi : _this4$filters.building = '') + "&house=".concat((_this4$filters2$house = (_this4$filters2 = _this4.filters).house) !== null && _this4$filters2$house !== void 0 ? _this4$filters2$house : _this4$filters2.house = '') + "&status=".concat((_this4$filters3$statu = (_this4$filters3 = _this4.filters).status) !== null && _this4$filters3$statu !== void 0 ? _this4$filters3$statu : _this4$filters3.status = 'approved') + "&from=".concat((_this4$filters4$from = (_this4$filters4 = _this4.filters).from) !== null && _this4$filters4$from !== void 0 ? _this4$filters4$from : _this4$filters4.from = '') + "&to=".concat((_this4$filters5$to = (_this4$filters5 = _this4.filters).to) !== null && _this4$filters5$to !== void 0 ? _this4$filters5$to : _this4$filters5.to = ''));
 
               case 3:
                 response = _context3.sent;
@@ -3555,12 +3564,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'payment-modal',
@@ -3602,7 +3605,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.post('api/payments', _objectSpread(_objectSpread({}, this.form), {}, {
         building: this.form.building ? this.form.building.id : '',
         house: this.form.house ? this.form.house.id : '',
-        tenant: this.form.house ? this.form.house.tenant : '',
         month: this.month ? "".concat(month.year, "-").concat(month.monthIndex, "-01") : "".concat(this.currentYear, "-").concat(this.currentMonth, "-01")
       })).then(function (response) {
         _this.resetForm();
@@ -3636,8 +3638,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         amount: '',
         date_paid: new Date(),
         month: '',
-        note: '',
-        is_deposit: false
+        note: ''
       };
     }
   },
@@ -3724,68 +3725,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "payment-table-filters",
   props: ['buildings'],
   data: function data() {
     return {
-      statuses: ['all', 'rent', 'deposit', 'deleted'],
+      statuses: ['approved', 'reversed'],
       filters: {},
       houses: [],
-      masks: {
-        input: 'DD-MM-YYYY'
-      }
+      tenants: []
     };
   },
   watch: {
@@ -3804,9 +3752,9 @@ __webpack_require__.r(__webpack_exports__);
       this.filters = {
         building: '',
         house: '',
-        status: 'all',
-        start: '',
-        end: ''
+        status: 'approved',
+        from: '',
+        to: ''
       };
     },
     applyFilters: function applyFilters() {
@@ -3814,8 +3762,8 @@ __webpack_require__.r(__webpack_exports__);
         building: this.filters.building ? this.filters.building.id : '',
         house: this.filters.house ? this.filters.house.id : '',
         status: this.filters.status,
-        start: this.filters.start ? this.filters.start.toDateString() : '',
-        end: this.filters.end ? this.filters.end.toDateString() : ''
+        from: this.filters.from,
+        end: this.filters.to
       };
       this.$emit('apply-filters', data);
     },
@@ -66901,8 +66849,7 @@ var render = function() {
                 ])
               ],
               1
-            ),
-            _vm._v("\n            " + _vm._s(_vm.closeAfterSave) + "\n        ")
+            )
           ])
         ]
       )
@@ -67281,7 +67228,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         $event.preventDefault()
-                        return _vm.deleteSelected($event)
+                        return _vm.reverseSelected($event)
                       }
                     }
                   },
@@ -67308,7 +67255,7 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _c("span", [_vm._v("Delete")])
+                    _c("span", [_vm._v("Reverse")])
                   ]
                 )
               ])
@@ -67441,20 +67388,6 @@ var render = function() {
                   "th",
                   {
                     staticClass:
-                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
-                    attrs: { scope: "col" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                        Rent /Deposit\n                    "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    staticClass:
                       " px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
                     attrs: { scope: "col" }
                   },
@@ -67477,7 +67410,23 @@ var render = function() {
                       "\n                        Date Paid\n                    "
                     )
                   ]
-                )
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      " px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Status\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(0)
               ])
             ]),
             _vm._v(" "),
@@ -67573,7 +67522,7 @@ var render = function() {
                     [
                       _vm._v(
                         "\n                        " +
-                          _vm._s(payment.tenant) +
+                          _vm._s(payment.tenant_name) +
                           "\n                    "
                       )
                     ]
@@ -67589,20 +67538,6 @@ var render = function() {
                       _vm._v(
                         "\n                        " +
                           _vm._s(payment.amount.toLocaleString()) +
-                          "\n                    "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    {
-                      staticClass: "px-6 py-4 whitespace-nowrap text-gray-500"
-                    },
-                    [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(payment.is_deposit ? "Deposit" : "Rent") +
                           "\n                    "
                       )
                     ]
@@ -67634,6 +67569,76 @@ var render = function() {
                           "\n                    "
                       )
                     ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap text-gray-500 capitalize"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(payment.status) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "flex space-x-3 justify-center px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
+                    },
+                    [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "text-indigo-600 hover:text-indigo-900",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.printReceipt(payment)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              staticClass: "h-5 w-5",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                viewBox: "0 0 20 20",
+                                fill: "currentColor"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                attrs: {
+                                  "fill-rule": "evenodd",
+                                  d:
+                                    "M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z",
+                                  "clip-rule": "evenodd"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "text-gray-600 hover:text-indigo-900",
+                          attrs: { href: "#" }
+                        },
+                        [_vm._v("view")]
+                      )
+                    ]
                   )
                 ])
               }),
@@ -67654,7 +67659,18 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "th",
+      { staticClass: "relative px-6 py-3", attrs: { scope: "col" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Edit")])]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -68037,68 +68053,6 @@ var render = function() {
                   : _vm._e()
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "flex items-center" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.form.is_deposit,
-                      expression: "form.is_deposit"
-                    }
-                  ],
-                  staticClass:
-                    "h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded",
-                  attrs: {
-                    id: "is_deposit",
-                    name: "is_deposit",
-                    type: "checkbox"
-                  },
-                  domProps: {
-                    checked: Array.isArray(_vm.form.is_deposit)
-                      ? _vm._i(_vm.form.is_deposit, null) > -1
-                      : _vm.form.is_deposit
-                  },
-                  on: {
-                    change: function($event) {
-                      var $$a = _vm.form.is_deposit,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 &&
-                            _vm.$set(_vm.form, "is_deposit", $$a.concat([$$v]))
-                        } else {
-                          $$i > -1 &&
-                            _vm.$set(
-                              _vm.form,
-                              "is_deposit",
-                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                            )
-                        }
-                      } else {
-                        _vm.$set(_vm.form, "is_deposit", $$c)
-                      }
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "ml-2 block text-sm text-gray-900",
-                    attrs: { for: "is_deposit" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                        Is deposit\n                    "
-                    )
-                  ]
-                )
-              ]),
-              _vm._v(" "),
               _c("div", [
                 _c(
                   "label",
@@ -68345,164 +68299,108 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-span-4" }, [
+      _c(
+        "div",
+        { staticClass: "col-span-2" },
+        [
+          _c(
+            "label",
+            {
+              staticClass: "block text-sm font-medium text-gray-700",
+              attrs: { for: "tenant" }
+            },
+            [_vm._v("Tenants")]
+          ),
+          _vm._v(" "),
+          _c("multiselect", {
+            attrs: {
+              options: _vm.tenants,
+              id: "tenant",
+              trackBy: "id",
+              label: "name",
+              placeholder: ""
+            },
+            model: {
+              value: _vm.filters.tenant,
+              callback: function($$v) {
+                _vm.$set(_vm.filters, "tenant", $$v)
+              },
+              expression: "filters.tenant"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-span-2" }, [
         _c("div", [
           _c(
             "label",
             {
               staticClass: "block text-sm font-medium text-gray-700",
-              attrs: { for: "date" }
+              attrs: { for: "from" }
             },
-            [_vm._v("Select Date")]
+            [_vm._v("From")]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "mt-1" }, [
-            _c(
-              "div",
-              { staticClass: "mb-4" },
-              [
-                _c("date-picker", {
-                  attrs: {
-                    mode: "date",
-                    masks: _vm.masks,
-                    "is-range": "",
-                    id: "date"
-                  },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "default",
-                      fn: function(ref) {
-                        var inputValue = ref.inputValue
-                        var inputEvents = ref.inputEvents
-                        var isDragging = ref.isDragging
-                        return [
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "flex flex-col sm:flex-row justify-start items-center w-full"
-                            },
-                            [
-                              _c("div", { staticClass: "relative flex-grow" }, [
-                                _c(
-                                  "svg",
-                                  {
-                                    staticClass:
-                                      "text-gray-600 w-4 h-full mx-2 absolute pointer-events-none",
-                                    attrs: {
-                                      fill: "none",
-                                      "stroke-linecap": "round",
-                                      "stroke-linejoin": "round",
-                                      "stroke-width": "2",
-                                      viewBox: "0 0 24 24",
-                                      stroke: "currentColor"
-                                    }
-                                  },
-                                  [
-                                    _c("path", {
-                                      attrs: {
-                                        d:
-                                          "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "input",
-                                  _vm._g(
-                                    {
-                                      staticClass:
-                                        "flex-grow pl-8 pr-2 py-1 border rounded w-full",
-                                      class: isDragging
-                                        ? "text-gray-600"
-                                        : "text-gray-900",
-                                      domProps: { value: inputValue.start }
-                                    },
-                                    inputEvents.start
-                                  )
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "flex-shrink-0 m-2" }, [
-                                _c(
-                                  "svg",
-                                  {
-                                    staticClass:
-                                      "w-4 h-4 stroke-current text-gray-600",
-                                    attrs: { viewBox: "0 0 24 24" }
-                                  },
-                                  [
-                                    _c("path", {
-                                      attrs: {
-                                        "stroke-linecap": "round",
-                                        "stroke-linejoin": "round",
-                                        "stroke-width": "2",
-                                        d: "M14 5l7 7m0 0l-7 7m7-7H3"
-                                      }
-                                    })
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "relative flex-grow" }, [
-                                _c(
-                                  "svg",
-                                  {
-                                    staticClass:
-                                      "text-gray-600 w-4 h-full mx-2 absolute pointer-events-none",
-                                    attrs: {
-                                      fill: "none",
-                                      "stroke-linecap": "round",
-                                      "stroke-linejoin": "round",
-                                      "stroke-width": "2",
-                                      viewBox: "0 0 24 24",
-                                      stroke: "currentColor"
-                                    }
-                                  },
-                                  [
-                                    _c("path", {
-                                      attrs: {
-                                        d:
-                                          "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "input",
-                                  _vm._g(
-                                    {
-                                      staticClass:
-                                        "flex-grow pl-8 pr-2 py-1 border rounded w-full",
-                                      class: isDragging
-                                        ? "text-gray-600"
-                                        : "text-gray-900",
-                                      domProps: { value: inputValue.end }
-                                    },
-                                    inputEvents.end
-                                  )
-                                )
-                              ])
-                            ]
-                          )
-                        ]
-                      }
-                    }
-                  ]),
-                  model: {
-                    value: _vm.filters,
-                    callback: function($$v) {
-                      _vm.filters = $$v
-                    },
-                    expression: "filters"
-                  }
-                })
-              ],
-              1
-            )
-          ])
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.filters.from,
+                expression: "filters.from"
+              }
+            ],
+            staticClass:
+              "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md",
+            attrs: { type: "date", id: "from", name: "from" },
+            domProps: { value: _vm.filters.from },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.filters, "from", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-span-2" }, [
+        _c("div", [
+          _c(
+            "label",
+            {
+              staticClass: "block text-sm font-medium text-gray-700",
+              attrs: { for: "to" }
+            },
+            [_vm._v("To")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.filters.to,
+                expression: "filters.to"
+              }
+            ],
+            staticClass:
+              "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md",
+            attrs: { type: "date", id: "to", name: "to" },
+            domProps: { value: _vm.filters.to },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.filters, "to", $event.target.value)
+              }
+            }
+          })
         ])
       ]),
       _vm._v(" "),

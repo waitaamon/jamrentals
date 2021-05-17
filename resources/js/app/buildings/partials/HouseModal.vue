@@ -39,7 +39,6 @@
                         </button>
                     </div>
                 </form>
-                {{ closeAfterSave }}
             </div>
         </Modal>
     </div>

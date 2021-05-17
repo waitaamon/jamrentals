@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Building;
 use Carbon\Carbon;
-use App\Models\Payment;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\{BuildingResource, PaymentCollection, PaymentResource};
+use App\Models\{House, Building, Payment};
 use App\Http\Requests\{StorePaymentRequest, UpdatePaymentRequest};
+use App\Http\Resources\{BuildingResource, PaymentCollection, PaymentResource};
 
 class PaymentsController extends Controller
 {
 
     public function prerequisites()
     {
-        $buildings = Building::with(['houses' => fn($query)=> $query->where('is_occupied', true)])->get();
+        $buildings = Building::with(['houses' => fn($query) => $query->where('is_occupied', true)])->get();
 
         return response()->json([
             'buildings' => BuildingResource::collection($buildings)
@@ -24,13 +23,11 @@ class PaymentsController extends Controller
     public function index()
     {
 
-        $paymentQuery = request()->get('status') == 'deleted' ? Payment::onlyTrashed() : Payment::query();
-
-        $payments = $paymentQuery
-            ->when((request()->get('status') == 'deposit'), fn($query) => $query->where('is_deposit', true))
-            ->when((request()->get('status') == 'rent'), fn($query) => $query->where('is_deposit', false))
+        $payments = Payment::query()
             ->when(request()->filled('building'), fn($query) => $query->whereHas('house', fn($query) => $query->where('building_id', request()->get('building'))))
             ->when(request()->filled('house'), fn($query) => $query->where('house_id', request()->get('house')))
+            ->when(request()->filled('tenant'), fn($query) => $query->where('tenant_id', request()->get('tenant')))
+            ->when(request()->filled('status'), fn($query) => $query->where('status', request()->get('status')))
             ->when(request()->filled('start'), fn($query) => $query->whereDate('month', '>=', Carbon::parse(request()->get('start'))))
             ->when(request()->filled('end'), fn($query) => $query->whereDate('month', '<=', Carbon::parse(request()->get('end'))))
             ->paginate(request()->get('per_page'));
@@ -40,13 +37,15 @@ class PaymentsController extends Controller
 
     public function store(StorePaymentRequest $request)
     {
-        $payment = Payment::create(array_merge(
-            $request->only('amount', 'is_deposit', 'tenant', 'note'),
+        $house = House::find($request->get('house'));
+
+        $payment = $house->payments()->create(array_merge(
+            $request->only('amount', 'note'),
             [
-                'house_id' => $request->house,
+                'tenant_id' => $house->tenant->id,
                 'user_id' => auth()->id(),
-                'month' => Carbon::parse($request->month),
-                'date_paid' => Carbon::parse($request->date_paid),
+                'month' => Carbon::parse($request->get('month')),
+                'date_paid' => Carbon::parse($request->get('date_paid')),
             ]
         ));
 
@@ -55,33 +54,18 @@ class PaymentsController extends Controller
 
     public function show(int $id)
     {
-        $payment = Payment::with('house', 'user', 'deletedBy')->findOrFail($id);
+        $payment = Payment::with('house', 'user', 'reversedBy')->findOrFail($id);
 
         return response(new PaymentResource($payment));
     }
 
     public function update(UpdatePaymentRequest $request, int $id)
     {
-        $payment = Payment::findOrFail($id);
-
-        $payment->update(array_merge(
-            $request->only('amount', 'is_deposit', 'tenant'),
-            [
-                'house_id' => $request->house,
-                'month' => Carbon::parse($request->month),
-                'date_paid' => Carbon::parse($request->date_paid),
-            ]
-        ));
-
-        $payment->refresh();
-
-        return response(new PaymentResource($payment));
+        abort('403', 'You are not authorized to perform this action');
     }
 
     public function destroy(int $id)
     {
-        $payment = Payment::findOrFail($id);
-
-        $payment->delete();
+        abort('403', 'You are not authorized to perform this action');
     }
 }

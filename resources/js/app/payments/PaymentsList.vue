@@ -27,7 +27,7 @@
                             </svg>
                             <span>Export</span>
                         </button>
-                        <button @click.prevent="deleteSelected"
+                        <button @click.prevent="reverseSelected"
                                 class="block flex items-center space-x-2 class = 'block flex w-full px-4 py-2 space-x-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900'">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cool-gray-400"
                                  viewBox="0 0 20 20" fill="currentColor">
@@ -35,7 +35,7 @@
                                       d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                                       clip-rule="evenodd"/>
                             </svg>
-                            <span>Delete</span>
+                            <span>Reverse</span>
                         </button>
                     </app-drop-down>
                 </div>
@@ -69,10 +69,6 @@
                             Amount
                         </th>
                         <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Rent /Deposit
-                        </th>
-                        <th scope="col"
                             class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Month
                         </th>
@@ -80,9 +76,13 @@
                             class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Date Paid
                         </th>
-                        <!--                        <th scope="col" class="relative px-6 py-3">-->
-                        <!--                            <span class="sr-only">Edit</span>-->
-                        <!--                        </th>-->
+                        <th scope="col"
+                            class=" px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Status
+                        </th>
+                        <th scope="col" class="relative px-6 py-3">
+                            <span class="sr-only">Edit</span>
+                        </th>
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -97,13 +97,10 @@
                             {{ payment.house_name }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900 capitalize">
-                            {{ payment.tenant }}
+                            {{ payment.tenant_name }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
                             {{ payment.amount.toLocaleString() }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-gray-500">
-                            {{ payment.is_deposit ? 'Deposit' : 'Rent' }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-gray-500">
                             {{ payment.month }}
@@ -111,9 +108,21 @@
                         <td class="px-6 py-4 whitespace-nowrap text-gray-500">
                             {{ payment.date_paid }}
                         </td>
-                        <!--                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">-->
-                        <!--                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>-->
-                        <!--                        </td>-->
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-500 capitalize">
+                            {{ payment.status }}
+                        </td>
+                        <td class="flex space-x-3 justify-center px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a @click.prevent="printReceipt(payment)" href="#"
+                               class="text-indigo-600 hover:text-indigo-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                     fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                          d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="text-gray-600 hover:text-indigo-900">view</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -202,13 +211,16 @@ export default {
                 this.$toast.error('Something went wrong try again later');
             })
         },
-        async deleteSelected() {
+        printReceipt(payment) {
+
+        },
+        async reverseSelected() {
             if (!this.selected.length) {
                 this.$toast.error('Select at least one record');
                 return
             }
             try {
-                await axios.post(`api/payment-bulk-delete`, {
+                await axios.post(`api/reverse-payments`, {
                     payments: this.selected
                 })
                 await this.fetchPayments()
@@ -223,9 +235,9 @@ export default {
                     `api/payments?per_page=${this.perPage}` +
                     `&building=${this.filters.building ??= ''}` +
                     `&house=${this.filters.house ??= ''}` +
-                    `&status=${this.filters.status ??= 'all'}` +
-                    `&start=${this.filters.start ??= ''}` +
-                    `&end=${this.filters.end ??= ''}`
+                    `&status=${this.filters.status ??= 'approved'}` +
+                    `&from=${this.filters.from ??= ''}` +
+                    `&to=${this.filters.to ??= ''}`
                 )
                 this.payments = response.data.data
                 this.paginationData = response.data.pagination
