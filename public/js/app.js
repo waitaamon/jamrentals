@@ -3055,6 +3055,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _partials_PaymentTableFIlters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./partials/PaymentTableFIlters */ "./resources/js/app/payments/partials/PaymentTableFIlters.vue");
 /* harmony import */ var _partials_PaymentModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./partials/PaymentModal */ "./resources/js/app/payments/partials/PaymentModal.vue");
 /* harmony import */ var _components_Appdropdown__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Appdropdown */ "./resources/js/components/Appdropdown.vue");
+/* harmony import */ var _partials_PaymentShowModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./partials/PaymentShowModal */ "./resources/js/app/payments/partials/PaymentShowModal.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3196,6 +3197,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+
 
 
 
@@ -3203,6 +3206,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'payments-list',
   components: {
+    PaymentShowModal: _partials_PaymentShowModal__WEBPACK_IMPORTED_MODULE_5__.default,
     AppDropDown: _components_Appdropdown__WEBPACK_IMPORTED_MODULE_4__.default,
     PaymentModal: _partials_PaymentModal__WEBPACK_IMPORTED_MODULE_3__.default,
     PaymentTableFilters: _partials_PaymentTableFIlters__WEBPACK_IMPORTED_MODULE_2__.default,
@@ -3279,6 +3283,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     applyFilters: function applyFilters(data) {
       this.filters = data;
       this.fetchPayments();
+    },
+    viewPayment: function viewPayment(payment) {
+      this.$refs.paymentShowModal.payment = payment;
+      this.$refs.paymentShowModal.showModal = true;
     },
     exportSelected: function exportSelected() {
       var _this2 = this;
@@ -3644,6 +3652,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.resetForm();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/payments/partials/PaymentShowModal.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/payments/partials/PaymentShowModal.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'payment-show-modal',
+  data: function data() {
+    return {
+      showModal: false,
+      payment: null
+    };
   }
 });
 
@@ -64121,6 +64162,45 @@ component.options.__file = "resources/js/app/payments/partials/PaymentModal.vue"
 
 /***/ }),
 
+/***/ "./resources/js/app/payments/partials/PaymentShowModal.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/app/payments/partials/PaymentShowModal.vue ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _PaymentShowModal_vue_vue_type_template_id_201bb6de___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PaymentShowModal.vue?vue&type=template&id=201bb6de& */ "./resources/js/app/payments/partials/PaymentShowModal.vue?vue&type=template&id=201bb6de&");
+/* harmony import */ var _PaymentShowModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PaymentShowModal.vue?vue&type=script&lang=js& */ "./resources/js/app/payments/partials/PaymentShowModal.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _PaymentShowModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _PaymentShowModal_vue_vue_type_template_id_201bb6de___WEBPACK_IMPORTED_MODULE_0__.render,
+  _PaymentShowModal_vue_vue_type_template_id_201bb6de___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/app/payments/partials/PaymentShowModal.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/app/payments/partials/PaymentTableFIlters.vue":
 /*!********************************************************************!*\
   !*** ./resources/js/app/payments/partials/PaymentTableFIlters.vue ***!
@@ -64616,6 +64696,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/app/payments/partials/PaymentShowModal.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/app/payments/partials/PaymentShowModal.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentShowModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PaymentShowModal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/payments/partials/PaymentShowModal.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentShowModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/app/payments/partials/PaymentTableFIlters.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************!*\
   !*** ./resources/js/app/payments/partials/PaymentTableFIlters.vue?vue&type=script&lang=js& ***!
@@ -64975,6 +65071,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentModal_vue_vue_type_template_id_60f940e4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentModal_vue_vue_type_template_id_60f940e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PaymentModal.vue?vue&type=template&id=60f940e4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/payments/partials/PaymentModal.vue?vue&type=template&id=60f940e4&");
+
+
+/***/ }),
+
+/***/ "./resources/js/app/payments/partials/PaymentShowModal.vue?vue&type=template&id=201bb6de&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/app/payments/partials/PaymentShowModal.vue?vue&type=template&id=201bb6de& ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentShowModal_vue_vue_type_template_id_201bb6de___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentShowModal_vue_vue_type_template_id_201bb6de___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentShowModal_vue_vue_type_template_id_201bb6de___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PaymentShowModal.vue?vue&type=template&id=201bb6de& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/payments/partials/PaymentShowModal.vue?vue&type=template&id=201bb6de&");
 
 
 /***/ }),
@@ -67266,7 +67379,9 @@ var render = function() {
           _c("payment-modal", {
             attrs: { buildings: _vm.buildings },
             on: { "fetch-payments": _vm.fetchPayments }
-          })
+          }),
+          _vm._v(" "),
+          _c("payment-show-modal", { ref: "paymentShowModal" })
         ],
         1
       )
@@ -67634,7 +67749,13 @@ var render = function() {
                         "a",
                         {
                           staticClass: "text-gray-600 hover:text-indigo-900",
-                          attrs: { href: "#" }
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.viewPayment(payment)
+                            }
+                          }
                         },
                         [_vm._v("view")]
                       )
@@ -68147,6 +68268,54 @@ var render = function() {
                 )
               ])
             ])
+          ])
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/payments/partials/PaymentShowModal.vue?vue&type=template&id=201bb6de&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/payments/partials/PaymentShowModal.vue?vue&type=template&id=201bb6de& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "Modal",
+        {
+          attrs: { modalClass: "max-width: 700px", title: "Payment Details" },
+          model: {
+            value: _vm.showModal,
+            callback: function($$v) {
+              _vm.showModal = $$v
+            },
+            expression: "showModal"
+          }
+        },
+        [
+          _c("div", { staticClass: "py-3" }, [
+            _vm._v("\n            " + _vm._s(_vm.payment) + "\n        ")
           ])
         ]
       )

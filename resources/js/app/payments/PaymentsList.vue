@@ -41,6 +41,7 @@
                 </div>
 
                 <payment-modal :buildings="buildings" @fetch-payments="fetchPayments"/>
+                <payment-show-modal ref="paymentShowModal"/>
             </div>
         </div>
         <div class="mt-3">
@@ -121,7 +122,7 @@
                                           clip-rule="evenodd"/>
                                 </svg>
                             </a>
-                            <a href="#" class="text-gray-600 hover:text-indigo-900">view</a>
+                            <a @click.prevent="viewPayment(payment)" href="#" class="text-gray-600 hover:text-indigo-900">view</a>
                         </td>
                     </tr>
                     </tbody>
@@ -138,10 +139,12 @@ import TablePagination from "../../components/TablePagination";
 import PaymentTableFilters from "./partials/PaymentTableFIlters";
 import PaymentModal from "./partials/PaymentModal";
 import AppDropDown from "../../components/Appdropdown";
+import PaymentShowModal from "./partials/PaymentShowModal";
 
 export default {
     name: 'payments-list',
     components: {
+        PaymentShowModal,
         AppDropDown,
         PaymentModal,
         PaymentTableFilters, TablePagination
@@ -189,6 +192,10 @@ export default {
         applyFilters(data) {
             this.filters = data
             this.fetchPayments()
+        },
+        viewPayment(payment) {
+            this.$refs.paymentShowModal.payment = payment
+            this.$refs.paymentShowModal.showModal = true
         },
         exportSelected() {
             if (!this.selected.length) {
