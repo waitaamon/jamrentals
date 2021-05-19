@@ -122,7 +122,8 @@
                                           clip-rule="evenodd"/>
                                 </svg>
                             </a>
-                            <a @click.prevent="viewPayment(payment)" href="#" class="text-gray-600 hover:text-indigo-900">view</a>
+                            <a @click.prevent="viewPayment(payment)" href="#"
+                               class="text-gray-600 hover:text-indigo-900">view</a>
                         </td>
                     </tr>
                     </tbody>
@@ -140,6 +141,7 @@ import PaymentTableFilters from "./partials/PaymentTableFIlters";
 import PaymentModal from "./partials/PaymentModal";
 import AppDropDown from "../../components/Appdropdown";
 import PaymentShowModal from "./partials/PaymentShowModal";
+import printJS from "print-js";
 
 export default {
     name: 'payments-list',
@@ -215,11 +217,16 @@ export default {
                 document.body.appendChild(link);
                 link.click();
             }).catch(e => {
-                this.$toast.error('Something went wrong try again later');
+                this.$toast.error('Something went wrong, try again later');
             })
         },
         printReceipt(payment) {
-
+            axios.get(`api/print-payment-receipt/${payment.id}`)
+                .then(response => {
+                    printJS({printable: response.data, type: 'pdf', base64: true})
+                }).catch(e => {
+                this.$toast.error('Something went wrong, try again later');
+            })
         },
         async reverseSelected() {
             if (!this.selected.length) {
@@ -232,7 +239,7 @@ export default {
                 })
                 await this.fetchPayments()
             } catch (e) {
-                this.$toast.error('Something went wrong try again later');
+                this.$toast.error('Something went wrong, try again later');
             }
         },
 
@@ -249,7 +256,7 @@ export default {
                 this.payments = response.data.data
                 this.paginationData = response.data.pagination
             } catch (e) {
-                this.$toast.error('Something went wrong try again later');
+                this.$toast.error('Something went wrong, try again later');
             }
         }
     },
