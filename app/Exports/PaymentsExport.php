@@ -30,7 +30,6 @@ class PaymentsExport implements FromCollection, ShouldAutoSize, WithHeadings, Wi
             'House',
             'Tenant',
             'Amount',
-            'Deposit',
             'Month',
             'Date Paid',
             'Status',
@@ -44,9 +43,8 @@ class PaymentsExport implements FromCollection, ShouldAutoSize, WithHeadings, Wi
         return [
             $row->house->building->name,
             $row->house->name,
-            $row->tenant,
+            $row->tenant->name,
             $row->amount,
-            (bool)$row->is_deposit,
             $row->month->format('M-Y'),
             $row->date_paid->format('d-M-Y'),
             $row->status,

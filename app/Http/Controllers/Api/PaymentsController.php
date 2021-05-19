@@ -28,8 +28,8 @@ class PaymentsController extends Controller
             ->when(request()->filled('house'), fn($query) => $query->where('house_id', request()->get('house')))
             ->when(request()->filled('tenant'), fn($query) => $query->where('tenant_id', request()->get('tenant')))
             ->when(request()->filled('status'), fn($query) => $query->where('status', request()->get('status')))
-            ->when(request()->filled('start'), fn($query) => $query->whereDate('month', '>=', Carbon::parse(request()->get('start'))))
-            ->when(request()->filled('end'), fn($query) => $query->whereDate('month', '<=', Carbon::parse(request()->get('end'))))
+            ->when(request()->filled('from'), fn($query) => $query->whereDate('month', '>=', Carbon::parse(request()->get('from'))))
+            ->when(request()->filled('to'), fn($query) => $query->whereDate('month', '<=', Carbon::parse(request()->get('to'))))
             ->paginate(request()->get('per_page'));
 
         return response(new PaymentCollection($payments));
