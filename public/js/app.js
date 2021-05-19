@@ -3285,7 +3285,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.fetchPayments();
     },
     viewPayment: function viewPayment(payment) {
-      this.$refs.paymentShowModal.payment = payment;
+      this.$refs.paymentShowModal.paymentId = payment.id;
       this.$refs.paymentShowModal.showModal = true;
     },
     exportSelected: function exportSelected() {
@@ -3668,6 +3668,103 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3683,8 +3780,44 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       showModal: false,
+      paymentId: null,
       payment: null
     };
+  },
+  methods: {
+    fetchPayment: function fetchPayment() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return axios.get("api/payments/".concat(_this.paymentId));
+
+              case 3:
+                response = _context.sent;
+                _this.payment = response.data;
+                _context.next = 10;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+
+                _this.$toast.error('Something went wrong try again later');
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 7]]);
+      }))();
+    }
   }
 });
 
@@ -68304,7 +68437,8 @@ var render = function() {
       _c(
         "Modal",
         {
-          attrs: { modalClass: "max-width: 700px", title: "Payment Details" },
+          attrs: { modalClass: "max-width: 800px", title: "Payment Details" },
+          on: { "before-open": _vm.fetchPayment },
           model: {
             value: _vm.showModal,
             callback: function($$v) {
@@ -68314,9 +68448,329 @@ var render = function() {
           }
         },
         [
-          _c("div", { staticClass: "py-3" }, [
-            _vm._v("\n            " + _vm._s(_vm.payment) + "\n        ")
-          ])
+          _vm.payment
+            ? _c("div", { staticClass: "py-3" }, [
+                _c("div", { staticClass: "flex flex-col" }, [
+                  _c(
+                    "div",
+                    { staticClass: "-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8" },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "overflow-hidden border-b border-gray-200 sm:rounded-lg"
+                            },
+                            [
+                              _c(
+                                "table",
+                                {
+                                  staticClass:
+                                    "min-w-full divide-y divide-gray-200"
+                                },
+                                [
+                                  _c(
+                                    "tbody",
+                                    {
+                                      staticClass:
+                                        "bg-white divide-y divide-gray-200"
+                                    },
+                                    [
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        Building\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(
+                                                  _vm.payment.building_name
+                                                ) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        House\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(_vm.payment.house_name) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        Tenant\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(
+                                                  _vm.payment.tenant_name
+                                                ) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        Amount\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(
+                                                  _vm.payment.amount.toLocaleString()
+                                                ) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        Month\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(_vm.payment.month) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        Date Paid\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(_vm.payment.date_paid) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        Status\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm text-gray-500 capitalize"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(_vm.payment.status) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        Note\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(_vm.payment.note) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-xs font-medium text-gray-900"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        Posted By\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          {
+                                            staticClass:
+                                              "px-6 py-4 whitespace-nowrap text-xs text-gray-500"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(_vm.payment.user.name) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              ])
+            : _vm._e()
         ]
       )
     ],

@@ -194,7 +194,7 @@ export default {
             this.fetchPayments()
         },
         viewPayment(payment) {
-            this.$refs.paymentShowModal.payment = payment
+            this.$refs.paymentShowModal.paymentId = payment.id
             this.$refs.paymentShowModal.showModal = true
         },
         exportSelected() {
