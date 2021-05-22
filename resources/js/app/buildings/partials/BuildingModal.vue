@@ -70,7 +70,7 @@ export default {
         submit() {
             axios({
                 method: this.building ? 'patch' : 'post',
-                url: this.building ? `api/buildings/${this.building.id}` : `api/buildings`,
+                url: this.building ? `/api/buildings/${this.building.id}` : `/api/buildings`,
                 data: this.form
             })
                 .then(response => {

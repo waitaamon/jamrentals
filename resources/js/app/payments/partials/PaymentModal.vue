@@ -183,7 +183,7 @@ export default {
     methods: {
         submit() {
             this.errors = {}
-            axios.post('api/payments', {
+            axios.post('/api/payments', {
                 ...this.form,
                 building: this.form.building ? this.form.building.id : '',
                 house: this.form.house ? this.form.house.id : '',

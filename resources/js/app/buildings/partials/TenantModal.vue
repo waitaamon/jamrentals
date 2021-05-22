@@ -8,7 +8,7 @@
             New Tenant
         </button>
 
-        <Modal v-model="showModal" modalClass="max-width: 700px" title="New House" v-on:before-open="setDefaults">
+        <Modal v-model="showModal" modalClass="max-width: 700px" title="New Tenant" v-on:before-open="setDefaults">
             <div class="py-3">
                 <form class="space-y-3">
                     <div>
@@ -40,8 +40,8 @@
                     <app-input v-model="form.deposit" name="deposit" type="number"
                                :error="errors.deposit ? errors.deposit[0] : null"/>
 
-                    <app-input v-model="form.incurred_cost" name="incurred_cost" type="number"
-                               :error="errors.incurred_cost ? errors.incurred_cost[0] : null"/>
+                    <app-input v-model="form.invoice_from" name="invoice_from" type="date"
+                               :error="errors.invoice_from ? errors.invoice_from[0] : null"/>
 
                     <app-textarea v-model="form.note" name="note" :error="errors.note ? errors.note[0] : null"/>
 
@@ -138,8 +138,8 @@ export default {
                 phone: '',
                 id_number: '',
                 note: '',
-                incurred_cost: 0,
                 deposit: 0,
+                invoice_from: 0,
             }
         },
         setDefaults() {
@@ -150,8 +150,8 @@ export default {
                 phone: this.tenant ? this.tenant.phone : '',
                 id_number: this.tenant ? this.tenant.id_number : '',
                 note: this.tenant ? this.tenant.note : '',
-                incurred_cost: this.tenant ? this.tenant.incurred_cost : 0,
                 deposit: this.tenant ? this.tenant.deposit : 0,
+                invoice_from: this.tenant ? this.tenant.invoice_from : 0,
             }
 
         }

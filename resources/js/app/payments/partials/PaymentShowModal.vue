@@ -110,7 +110,7 @@ export default {
     methods: {
         async fetchPayment() {
             try {
-                let response = await axios.get(`api/payments/${this.paymentId}`)
+                let response = await axios.get(`/api/payments/${this.paymentId}`)
                 this.payment = response.data
             } catch (e) {
                 this.$toast.error('Something went wrong try again later')

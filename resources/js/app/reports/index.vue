@@ -79,7 +79,7 @@ export default {
     methods: {
         async prerequisites() {
             try {
-                let response = await axios.get('api/payment-prerequisites')
+                let response = await axios.get('/api/payment-prerequisites')
                 this.buildings = response.data.buildings
             } catch (e) {
                 this.$toast.error('Something went wrong try again later');
@@ -92,7 +92,7 @@ export default {
             }
 
             try {
-                let response = await axios.get(`api/report?building=${this.filters.building.id}&month=${this.filters.month}`)
+                let response = await axios.get(`/api/report?building=${this.filters.building.id}&month=${this.filters.month}`)
                 this.buildings = response.data.buildings
             } catch (e) {
                 this.$toast.error('Something went wrong try again later');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\TenantsCollection;
 use App\Jobs\UpdateHouseStatus;
+use Carbon\Carbon;
 use App\Models\{House, Tenant};
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TenantResource;
@@ -27,7 +28,12 @@ class TenantsController extends Controller
 
         abort_if($house->is_occupied, 405, 'The selected house is not vacant.');
 
-        $tenant = $house->tenant()->create($request->only('name', 'id_number', 'phone', 'deposit', 'incurred_cost', 'note'));
+        $tenant = $house->tenant()->create(array_merge(
+            $request->only('name', 'id_number', 'phone', 'deposit', 'note'),
+            [
+                'invoice_from' => Carbon::parse($request->get('invoice_from'))->startOfMonth()
+            ]
+        ));
 
         UpdateHouseStatus::dispatchSync($tenant);
 
@@ -49,9 +55,10 @@ class TenantsController extends Controller
         abort_if($tenant->house_id != $house->id && $house->is_occupied, 405, 'The selected house is not vacant.');
 
         $tenant->update(array_merge(
-            $request->only('name', 'id_number', 'phone', 'deposit', 'incurred_cost', 'note'),
+            $request->only('name', 'id_number', 'phone', 'deposit', 'note'),
             [
-                'house_id' => $house->id
+                'house_id' => $house->id,
+                'invoice_from' => Carbon::parse($request->get('invoice_from'))->startOfMonth()
             ]
         ));
 

@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\House;
+use App\Models\Tenant;
 use Carbon\Carbon;
 use Carbon\Traits\Creator;
 use Illuminate\Bus\Queueable;
@@ -17,10 +18,14 @@ class GenerateMonthlyInvoice implements ShouldQueue
 
     public function handle()
     {
+        Tenant::query()->isActive()->get()
+            ->each(function ($tenant) {
+                $month = new Carbon('first day of this month');
+            });
         House::all()
             ->each(function ($house) {
 
-                $month = new Carbon('first day of this month');
+
 
                 $payment = $house->payments()->whereDate('month', $month)->first();
 

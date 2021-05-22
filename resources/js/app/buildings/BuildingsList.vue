@@ -57,8 +57,10 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {{ building.houses_count }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                            <a :href="`/buildings/${building.id}`" class="text-indigo-600 hover:text-indigo-900">View</a>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex items-center space-x-3">
+                            <a :href="`/buildings/${building.id}`" class="text-indigo-600 hover:text-indigo-900">
+                               View
+                            </a>
                             <a href="#" class="text-red-300 hover:text-red-500" @click.prevent="editBuilding(building)">Edit</a>
                         </td>
                     </tr>
@@ -100,7 +102,7 @@ export default {
         },
         async fetchBuildings() {
             try {
-                let response = await axios.get(`api/buildings?per_page=${this.perPage}`)
+                let response = await axios.get(`/api/buildings?per_page=${this.perPage}`)
                 this.buildings = response.data.data
                 this.paginationData = response.data.pagination
             } catch (e) {

@@ -20,8 +20,8 @@ class StoreTenantRequest extends FormRequest
             'id_number' => 'nullable|string|max:254',
             'phone' => 'nullable|string|max:254',
             'deposit' => 'required|numeric|min:0',
-            'incurred_cost' => 'required|numeric|min:0',
             'note' => 'nullable|string|',
+            'invoice_from' => 'required|date'
         ];
     }
 }

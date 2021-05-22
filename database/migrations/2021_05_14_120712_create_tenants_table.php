@@ -19,11 +19,10 @@ class CreateTenantsTable extends Migration
             $table->string('name');
             $table->string('id_number')->nullable();
             $table->string('phone')->nullable();
-            $table->bigInteger('deposit')->default(0);
-            $table->bigInteger('incurred_cost')->default(0);
-            $table->bigInteger('balance')->default(0);
             $table->text('note')->nullable();
+            $table->bigInteger('deposit')->default(0);
             $table->string('status')->default('active');
+            $table->date('invoice_from');
             $table->timestamps();
             $table->softDeletes();
         });

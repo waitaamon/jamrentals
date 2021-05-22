@@ -40,7 +40,7 @@
                     </app-drop-down>
                 </div>
 
-                <payment-modal :buildings="buildings" @fetch-payments="fetchPayments"/>
+                <payment-modal :buildings="buildings" @fetch-payments="fetchPayments" v-if="!buildingId"/>
                 <payment-show-modal ref="paymentShowModal"/>
             </div>
         </div>
@@ -151,6 +151,16 @@ export default {
         PaymentModal,
         PaymentTableFilters, TablePagination
     },
+    props: {
+        houseId: {
+            required: false,
+            type: Number
+        },
+        buildingId: {
+            required: false,
+            type: Number
+        },
+    },
     data() {
         return {
             payments: [],
@@ -177,7 +187,7 @@ export default {
     methods: {
         async prerequisites() {
             try {
-                let response = await axios.get('api/payment-prerequisites')
+                let response = await axios.get('/api/payment-prerequisites')
                 this.buildings = response.data.buildings
             } catch (e) {
                 this.$toast.error('Something went wrong try again later');
@@ -206,7 +216,7 @@ export default {
             }
             axios({
                 method: 'post',
-                url: 'api/payment-export-excel',
+                url: '/api/payment-export-excel',
                 responseType: 'blob',
                 data: {payments: this.selected}
             }).then(response => {
@@ -221,7 +231,7 @@ export default {
             })
         },
         printReceipt(payment) {
-            axios.get(`api/print-payment-receipt/${payment.id}`)
+            axios.get(`/api/print-payment-receipt/${payment.id}`)
                 .then(response => {
                     printJS({printable: response.data, type: 'pdf', base64: true})
                 }).catch(e => {
@@ -234,7 +244,7 @@ export default {
                 return
             }
             try {
-                await axios.post(`api/reverse-payments`, {
+                await axios.post(`/api/reverse-payments`, {
                     payments: this.selected
                 })
                 await this.fetchPayments()
@@ -246,9 +256,9 @@ export default {
         async fetchPayments() {
             try {
                 let response = await axios.get(
-                    `api/payments?per_page=${this.perPage}` +
-                    `&building=${this.filters.building ??= ''}` +
-                    `&house=${this.filters.house ??= ''}` +
+                    `/api/payments?per_page=${this.perPage}` +
+                    `&building=${this.buildingId ? this.buildingId : this.filters.building ??= ''}` +
+                    `&house=${this.houseId ? this.houseId : this.filters.house ??= ''}` +
                     `&status=${this.filters.status ??= 'approved'}` +
                     `&from=${this.filters.from ??= ''}` +
                     `&to=${this.filters.to ??= ''}`

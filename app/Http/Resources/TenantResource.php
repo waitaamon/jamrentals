@@ -21,6 +21,8 @@ class TenantResource extends JsonResource
             'balance' => $this->balance,
             'note' => $this->note ?: '',
             'created_at' => $this->created_at->format('d-M-Y'),
+            'invoice_from' => $this->invoice_from->format('Y-m-d'),
+            'invoice_from_month' => $this->invoice_from->format('M-Y'),
             'invoices' => InvoiceResource::collection($this->whenLoaded('invoices')),
             'payments' => PaymentResource::collection($this->whenLoaded('payments')),
         ];

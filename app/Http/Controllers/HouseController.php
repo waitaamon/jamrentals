@@ -13,8 +13,8 @@ class HouseController extends Controller
 
     public function show(int $id)
     {
-        $house = House::with('building', 'payments')->findOrFail($id);
+        $house = House::with('building', 'payments', 'tenant')->findOrFail($id);
 
-        return view('houses.index', compact('house'));
+        return view('houses.show', compact('house'));
     }
 }

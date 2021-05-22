@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo};
 use Illuminate\Database\Eloquent\{Builder, Model, SoftDeletes};
-use Illuminate\Support\Facades\DB;
 
 class Payment extends Model
 {

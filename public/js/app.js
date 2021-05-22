@@ -1951,6 +1951,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1990,7 +1992,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios.get("api/buildings?per_page=".concat(_this.perPage));
+                return axios.get("/api/buildings?per_page=".concat(_this.perPage));
 
               case 3:
                 response = _context.sent;
@@ -2661,7 +2663,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios({
         method: this.building ? 'patch' : 'post',
-        url: this.building ? "api/buildings/".concat(this.building.id) : "api/buildings",
+        url: this.building ? "/api/buildings/".concat(this.building.id) : "/api/buildings",
         data: this.form
       }).then(function (response) {
         _this.resetForm();
@@ -3005,8 +3007,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         phone: '',
         id_number: '',
         note: '',
-        incurred_cost: 0,
-        deposit: 0
+        deposit: 0,
+        invoice_from: 0
       };
     },
     setDefaults: function setDefaults() {
@@ -3020,8 +3022,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         phone: this.tenant ? this.tenant.phone : '',
         id_number: this.tenant ? this.tenant.id_number : '',
         note: this.tenant ? this.tenant.note : '',
-        incurred_cost: this.tenant ? this.tenant.incurred_cost : 0,
-        deposit: this.tenant ? this.tenant.deposit : 0
+        deposit: this.tenant ? this.tenant.deposit : 0,
+        invoice_from: this.tenant ? this.tenant.invoice_from : 0
       };
     }
   },
@@ -3216,6 +3218,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     PaymentTableFilters: _partials_PaymentTableFIlters__WEBPACK_IMPORTED_MODULE_2__.default,
     TablePagination: _components_TablePagination__WEBPACK_IMPORTED_MODULE_1__.default
   },
+  props: {
+    houseId: {
+      required: false,
+      type: Number
+    },
+    buildingId: {
+      required: false,
+      type: Number
+    }
+  },
   data: function data() {
     return {
       payments: [],
@@ -3254,7 +3266,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios.get('api/payment-prerequisites');
+                return axios.get('/api/payment-prerequisites');
 
               case 3:
                 response = _context.sent;
@@ -3302,7 +3314,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       axios({
         method: 'post',
-        url: 'api/payment-export-excel',
+        url: '/api/payment-export-excel',
         responseType: 'blob',
         data: {
           payments: this.selected
@@ -3321,7 +3333,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     printReceipt: function printReceipt(payment) {
       var _this3 = this;
 
-      axios.get("api/print-payment-receipt/".concat(payment.id)).then(function (response) {
+      axios.get("/api/print-payment-receipt/".concat(payment.id)).then(function (response) {
         print_js__WEBPACK_IMPORTED_MODULE_6___default()({
           printable: response.data,
           type: 'pdf',
@@ -3351,7 +3363,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _context2.prev = 3;
                 _context2.next = 6;
-                return axios.post("api/reverse-payments", {
+                return axios.post("/api/reverse-payments", {
                   payments: _this4.selected
                 });
 
@@ -3389,7 +3401,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return axios.get("api/payments?per_page=".concat(_this5.perPage) + "&building=".concat((_this5$filters$buildi = (_this5$filters = _this5.filters).building) !== null && _this5$filters$buildi !== void 0 ? _this5$filters$buildi : _this5$filters.building = '') + "&house=".concat((_this5$filters2$house = (_this5$filters2 = _this5.filters).house) !== null && _this5$filters2$house !== void 0 ? _this5$filters2$house : _this5$filters2.house = '') + "&status=".concat((_this5$filters3$statu = (_this5$filters3 = _this5.filters).status) !== null && _this5$filters3$statu !== void 0 ? _this5$filters3$statu : _this5$filters3.status = 'approved') + "&from=".concat((_this5$filters4$from = (_this5$filters4 = _this5.filters).from) !== null && _this5$filters4$from !== void 0 ? _this5$filters4$from : _this5$filters4.from = '') + "&to=".concat((_this5$filters5$to = (_this5$filters5 = _this5.filters).to) !== null && _this5$filters5$to !== void 0 ? _this5$filters5$to : _this5$filters5.to = ''));
+                return axios.get("/api/payments?per_page=".concat(_this5.perPage) + "&building=".concat(_this5.buildingId ? _this5.buildingId : (_this5$filters$buildi = (_this5$filters = _this5.filters).building) !== null && _this5$filters$buildi !== void 0 ? _this5$filters$buildi : _this5$filters.building = '') + "&house=".concat(_this5.houseId ? _this5.houseId : (_this5$filters2$house = (_this5$filters2 = _this5.filters).house) !== null && _this5$filters2$house !== void 0 ? _this5$filters2$house : _this5$filters2.house = '') + "&status=".concat((_this5$filters3$statu = (_this5$filters3 = _this5.filters).status) !== null && _this5$filters3$statu !== void 0 ? _this5$filters3$statu : _this5$filters3.status = 'approved') + "&from=".concat((_this5$filters4$from = (_this5$filters4 = _this5.filters).from) !== null && _this5$filters4$from !== void 0 ? _this5$filters4$from : _this5$filters4.from = '') + "&to=".concat((_this5$filters5$to = (_this5$filters5 = _this5.filters).to) !== null && _this5$filters5$to !== void 0 ? _this5$filters5$to : _this5$filters5.to = ''));
 
               case 3:
                 response = _context3.sent;
@@ -3626,7 +3638,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       this.errors = {};
-      axios.post('api/payments', _objectSpread(_objectSpread({}, this.form), {}, {
+      axios.post('/api/payments', _objectSpread(_objectSpread({}, this.form), {}, {
         building: this.form.building ? this.form.building.id : '',
         house: this.form.house ? this.form.house.id : '',
         month: this.month ? "".concat(month.year, "-").concat(month.monthIndex, "-01") : "".concat(this.currentYear, "-").concat(this.currentMonth, "-01")
@@ -3812,7 +3824,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios.get("api/payments/".concat(_this.paymentId));
+                return axios.get("/api/payments/".concat(_this.paymentId));
 
               case 3:
                 response = _context.sent;
@@ -4077,7 +4089,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios.get('api/payment-prerequisites');
+                return axios.get('/api/payment-prerequisites');
 
               case 3:
                 response = _context.sent;
@@ -4120,7 +4132,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _context2.prev = 3;
                 _context2.next = 6;
-                return axios.get("api/report?building=".concat(_this2.filters.building.id, "&month=").concat(_this2.filters.month));
+                return axios.get("/api/report?building=".concat(_this2.filters.building.id, "&month=").concat(_this2.filters.month));
 
               case 6:
                 response = _context2.sent;
@@ -66777,7 +66789,7 @@ var render = function() {
                     "td",
                     {
                       staticClass:
-                        "px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2"
+                        "px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex items-center space-x-3"
                     },
                     [
                       _c(
@@ -66786,7 +66798,11 @@ var render = function() {
                           staticClass: "text-indigo-600 hover:text-indigo-900",
                           attrs: { href: "/buildings/" + building.id }
                         },
-                        [_vm._v("View")]
+                        [
+                          _vm._v(
+                            "\n                           View\n                        "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -68159,7 +68175,7 @@ var render = function() {
           _c(
             "Modal",
             {
-              attrs: { modalClass: "max-width: 700px", title: "New House" },
+              attrs: { modalClass: "max-width: 700px", title: "New Tenant" },
               on: { "before-open": _vm.setDefaults },
               model: {
                 value: _vm.showModal,
@@ -68292,18 +68308,18 @@ var render = function() {
                     _vm._v(" "),
                     _c("app-input", {
                       attrs: {
-                        name: "incurred_cost",
-                        type: "number",
-                        error: _vm.errors.incurred_cost
-                          ? _vm.errors.incurred_cost[0]
+                        name: "invoice_from",
+                        type: "date",
+                        error: _vm.errors.invoice_from
+                          ? _vm.errors.invoice_from[0]
                           : null
                       },
                       model: {
-                        value: _vm.form.incurred_cost,
+                        value: _vm.form.invoice_from,
                         callback: function($$v) {
-                          _vm.$set(_vm.form, "incurred_cost", $$v)
+                          _vm.$set(_vm.form, "invoice_from", $$v)
                         },
-                        expression: "form.incurred_cost"
+                        expression: "form.invoice_from"
                       }
                     }),
                     _vm._v(" "),
@@ -68520,10 +68536,12 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("payment-modal", {
-            attrs: { buildings: _vm.buildings },
-            on: { "fetch-payments": _vm.fetchPayments }
-          }),
+          !_vm.buildingId
+            ? _c("payment-modal", {
+                attrs: { buildings: _vm.buildings },
+                on: { "fetch-payments": _vm.fetchPayments }
+              })
+            : _vm._e(),
           _vm._v(" "),
           _c("payment-show-modal", { ref: "paymentShowModal" })
         ],

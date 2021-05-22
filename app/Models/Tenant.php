@@ -10,9 +10,11 @@ class Tenant extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['house_id', 'name', 'id_number', 'phone', 'deposit', 'incurred_cost', 'balance', 'note', 'status'];
+    protected $fillable = ['house_id', 'name', 'id_number', 'phone', 'deposit', 'note', 'status', 'invoice_from'];
 
     protected $appends = ['balance'];
+
+    protected $dates = ['invoice_from'];
 
     public function house(): BelongsTo
     {
@@ -32,6 +34,11 @@ class Tenant extends Model
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function incurredCost(): HasMany
+    {
+        return $this->hasMany(TenantIncurredCost::class);
     }
 
     public function hasBalance(): bool
