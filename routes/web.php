@@ -13,6 +13,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('houses/{id}', [\App\Http\Controllers\HouseController::class, 'show'])->name('house.show');
 
+    Route::get('tenants/{id}', [\App\Http\Controllers\TenantController::class, 'show'])->name('tenant.show');
+
     Route::get('payments', [\App\Http\Controllers\PaymentController::class, 'index'])->name('payment.index');
     Route::get('payments/{id}', [\App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
 

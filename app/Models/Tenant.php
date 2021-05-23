@@ -48,7 +48,7 @@ class Tenant extends Model
 
     public function getBalanceAttribute()
     {
-        return $this->invoices()->sum('balance');
+        return $this->invoices()->sum('amount') - $this->approvedPayments()->sum('amount');
     }
 
     public function scopeIsActive(Builder  $query): Builder

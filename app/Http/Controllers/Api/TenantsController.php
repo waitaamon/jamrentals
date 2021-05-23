@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\TenantsCollection;
-use App\Jobs\UpdateHouseStatus;
 use Carbon\Carbon;
 use App\Models\{House, Tenant};
+use App\Jobs\GenerateTenantInvoice;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TenantResource;
+use App\Http\Resources\TenantsCollection;
 use App\Http\Requests\{StoreTenantRequest, UpdateTenantRequest};
 
 class TenantsController extends Controller
@@ -35,7 +35,7 @@ class TenantsController extends Controller
             ]
         ));
 
-        UpdateHouseStatus::dispatchSync($tenant);
+        GenerateTenantInvoice::dispatchSync($tenant);
 
     }
 
@@ -62,7 +62,6 @@ class TenantsController extends Controller
             ]
         ));
 
-        UpdateHouseStatus::dispatchSync($tenant);
     }
 
     public function destroy(int $id)
