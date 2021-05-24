@@ -14,6 +14,8 @@ class Invoice extends Model
 
     protected $appends = ['is_paid'];
 
+    protected $dates = ['month'];
+
     public function house(): BelongsTo
     {
         return $this->belongsTo(House::class);

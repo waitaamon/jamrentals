@@ -32231,6 +32231,14 @@ select {
   width: 100% !important;
 }
 
+.month-picker__container {
+  z-index: 99;
+}
+
+.month-picker--default {
+  background-color: white;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

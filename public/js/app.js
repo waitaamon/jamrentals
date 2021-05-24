@@ -3992,6 +3992,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_month_picker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-month-picker */ "./node_modules/vue-month-picker/src/index.js");
 /* harmony import */ var _partials_Stats__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./partials/Stats */ "./resources/js/app/reports/partials/Stats.vue");
+/* harmony import */ var _components_tabs_AppTabs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/tabs/AppTabs */ "./resources/js/components/tabs/AppTabs.vue");
+/* harmony import */ var _components_tabs_AppTab__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/tabs/AppTab */ "./resources/js/components/tabs/AppTab.vue");
+/* harmony import */ var _partials_PaymentReportTable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./partials/PaymentReportTable */ "./resources/js/app/reports/partials/PaymentReportTable.vue");
+/* harmony import */ var _partials_UnpaidInvoiceReportTable__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./partials/UnpaidInvoiceReportTable */ "./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -4049,22 +4053,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'reports-index',
   components: {
+    UnpaidInvoicesReportTable: _partials_UnpaidInvoiceReportTable__WEBPACK_IMPORTED_MODULE_6__.default,
+    PaymentsReportTableList: _partials_PaymentReportTable__WEBPACK_IMPORTED_MODULE_5__.default,
     Stats: _partials_Stats__WEBPACK_IMPORTED_MODULE_2__.default,
-    MonthPickerInput: vue_month_picker__WEBPACK_IMPORTED_MODULE_1__.MonthPickerInput
+    MonthPickerInput: vue_month_picker__WEBPACK_IMPORTED_MODULE_1__.MonthPickerInput,
+    AppTab: _components_tabs_AppTab__WEBPACK_IMPORTED_MODULE_4__.default,
+    AppTabs: _components_tabs_AppTabs__WEBPACK_IMPORTED_MODULE_3__.default
   },
   data: function data() {
     return {
       buildings: [],
+      building: null,
       stats: null,
       filters: {
         building: '',
         month: ''
-      }
+      },
+      tabs: [{
+        name: 'Payments',
+        value: 'payments'
+      }, {
+        name: 'Unpaid Rent',
+        value: 'unpaid'
+      }, {
+        name: 'Deposit',
+        value: 'deposit'
+      }, {
+        name: 'Vacant Houses',
+        value: 'vacant'
+      }]
     };
   },
   computed: {
@@ -4115,7 +4156,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var response;
+        var month, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -4130,28 +4171,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return");
 
               case 3:
-                _context2.prev = 3;
-                _context2.next = 6;
-                return axios.get("/api/report?building=".concat(_this2.filters.building.id, "&month=").concat(_this2.filters.month));
+                month = "".concat(_this2.filters.month.year, "-").concat(_this2.filters.month.monthIndex, "-1");
+                _context2.prev = 4;
+                _context2.next = 7;
+                return axios.get("/api/report?building=".concat(_this2.filters.building.id, "&month=").concat(month));
 
-              case 6:
+              case 7:
                 response = _context2.sent;
-                _this2.buildings = response.data.buildings;
-                _context2.next = 13;
+                _this2.building = response.data;
+                _context2.next = 14;
                 break;
 
-              case 10:
-                _context2.prev = 10;
-                _context2.t0 = _context2["catch"](3);
+              case 11:
+                _context2.prev = 11;
+                _context2.t0 = _context2["catch"](4);
 
                 _this2.$toast.error('Something went wrong try again later');
 
-              case 13:
+              case 14:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[3, 10]]);
+        }, _callee2, null, [[4, 11]]);
       }))();
     },
     resetFilters: function resetFilters() {
@@ -4163,6 +4205,214 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     this.prerequisites();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/PaymentReportTable.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/PaymentReportTable.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _components_TablePagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/TablePagination */ "./resources/js/components/TablePagination.vue");
+/* harmony import */ var _components_Appdropdown__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/Appdropdown */ "./resources/js/components/Appdropdown.vue");
+/* harmony import */ var _payments_partials_PaymentShowModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../payments/partials/PaymentShowModal */ "./resources/js/app/payments/partials/PaymentShowModal.vue");
+/* harmony import */ var print_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! print-js */ "./node_modules/print-js/dist/print.js");
+/* harmony import */ var print_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(print_js__WEBPACK_IMPORTED_MODULE_3__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'payments-report-table-list',
+  components: {
+    PaymentShowModal: _payments_partials_PaymentShowModal__WEBPACK_IMPORTED_MODULE_2__.default,
+    AppDropDown: _components_Appdropdown__WEBPACK_IMPORTED_MODULE_1__.default,
+    TablePagination: _components_TablePagination__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  props: ['payments'],
+  data: function data() {
+    return {
+      selected: [],
+      selectAll: false
+    };
+  },
+  watch: {
+    selectAll: {
+      handler: function handler() {
+        if (this.selectAll) {
+          this.selected = this.payments.map(function (payment) {
+            return payment.id;
+          });
+          return;
+        }
+
+        this.selected = [];
+      }
+    }
+  },
+  methods: {
+    viewPayment: function viewPayment(payment) {
+      this.$refs.paymentShowModal.paymentId = payment.id;
+      this.$refs.paymentShowModal.showModal = true;
+    },
+    exportSelected: function exportSelected() {
+      var _this = this;
+
+      if (!this.selected.length) {
+        this.$toast.error('Select at least one record');
+        return;
+      }
+
+      axios({
+        method: 'post',
+        url: '/api/payment-export-excel',
+        responseType: 'blob',
+        data: {
+          payments: this.selected
+        }
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', "rent-payments.xlsx");
+        document.body.appendChild(link);
+        link.click();
+      })["catch"](function (e) {
+        _this.$toast.error('Something went wrong, try again later');
+      });
+    },
+    printReceipt: function printReceipt(payment) {
+      var _this2 = this;
+
+      axios.get("/api/print-payment-receipt/".concat(payment.id)).then(function (response) {
+        print_js__WEBPACK_IMPORTED_MODULE_3___default()({
+          printable: response.data,
+          type: 'pdf',
+          base64: true
+        });
+      })["catch"](function (e) {
+        _this2.$toast.error('Something went wrong, try again later');
+      });
+    }
   }
 });
 
@@ -4225,6 +4475,174 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'stats'
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _components_Appdropdown__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/Appdropdown */ "./resources/js/components/Appdropdown.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'unpaid-invoices-report-table',
+  components: {
+    AppDropDown: _components_Appdropdown__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  props: ['invoices'],
+  data: function data() {
+    return {
+      selected: [],
+      selectAll: false
+    };
+  },
+  watch: {
+    selectAll: {
+      handler: function handler() {
+        if (this.selectAll) {
+          this.selected = this.invoices.map(function (invoice) {
+            return invoice.id;
+          });
+          return;
+        }
+
+        this.selected = [];
+      }
+    }
+  },
+  methods: {
+    exportSelected: function exportSelected() {
+      var _this = this;
+
+      if (!this.selected.length) {
+        this.$toast.error('Select at least one record');
+        return;
+      }
+
+      axios({
+        method: 'post',
+        url: '/api/unpaid-invoices-export-excel',
+        responseType: 'blob',
+        data: {
+          invoices: this.selected
+        }
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data]));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', "unpaid-invoices.xlsx");
+        document.body.appendChild(link);
+        link.click();
+      })["catch"](function (e) {
+        _this.$toast.error('Something went wrong, try again later');
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -65435,6 +65853,45 @@ component.options.__file = "resources/js/app/reports/index.vue"
 
 /***/ }),
 
+/***/ "./resources/js/app/reports/partials/PaymentReportTable.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/app/reports/partials/PaymentReportTable.vue ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _PaymentReportTable_vue_vue_type_template_id_36f25af6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PaymentReportTable.vue?vue&type=template&id=36f25af6& */ "./resources/js/app/reports/partials/PaymentReportTable.vue?vue&type=template&id=36f25af6&");
+/* harmony import */ var _PaymentReportTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PaymentReportTable.vue?vue&type=script&lang=js& */ "./resources/js/app/reports/partials/PaymentReportTable.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _PaymentReportTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _PaymentReportTable_vue_vue_type_template_id_36f25af6___WEBPACK_IMPORTED_MODULE_0__.render,
+  _PaymentReportTable_vue_vue_type_template_id_36f25af6___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/app/reports/partials/PaymentReportTable.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/app/reports/partials/Stats.vue":
 /*!*****************************************************!*\
   !*** ./resources/js/app/reports/partials/Stats.vue ***!
@@ -65470,6 +65927,45 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/app/reports/partials/Stats.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _UnpaidInvoiceReportTable_vue_vue_type_template_id_164fe703___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UnpaidInvoiceReportTable.vue?vue&type=template&id=164fe703& */ "./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue?vue&type=template&id=164fe703&");
+/* harmony import */ var _UnpaidInvoiceReportTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UnpaidInvoiceReportTable.vue?vue&type=script&lang=js& */ "./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _UnpaidInvoiceReportTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _UnpaidInvoiceReportTable_vue_vue_type_template_id_164fe703___WEBPACK_IMPORTED_MODULE_0__.render,
+  _UnpaidInvoiceReportTable_vue_vue_type_template_id_164fe703___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -65900,6 +66396,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/app/reports/partials/PaymentReportTable.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/app/reports/partials/PaymentReportTable.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentReportTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PaymentReportTable.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/PaymentReportTable.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentReportTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/app/reports/partials/Stats.vue?vue&type=script&lang=js&":
 /*!******************************************************************************!*\
   !*** ./resources/js/app/reports/partials/Stats.vue?vue&type=script&lang=js& ***!
@@ -65913,6 +66425,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Stats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Stats.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/Stats.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Stats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UnpaidInvoiceReportTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UnpaidInvoiceReportTable.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UnpaidInvoiceReportTable_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -66282,6 +66810,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/app/reports/partials/PaymentReportTable.vue?vue&type=template&id=36f25af6&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/app/reports/partials/PaymentReportTable.vue?vue&type=template&id=36f25af6& ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentReportTable_vue_vue_type_template_id_36f25af6___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentReportTable_vue_vue_type_template_id_36f25af6___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentReportTable_vue_vue_type_template_id_36f25af6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PaymentReportTable.vue?vue&type=template&id=36f25af6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/PaymentReportTable.vue?vue&type=template&id=36f25af6&");
+
+
+/***/ }),
+
 /***/ "./resources/js/app/reports/partials/Stats.vue?vue&type=template&id=4dbe863e&":
 /*!************************************************************************************!*\
   !*** ./resources/js/app/reports/partials/Stats.vue?vue&type=template&id=4dbe863e& ***!
@@ -66295,6 +66840,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Stats_vue_vue_type_template_id_4dbe863e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Stats_vue_vue_type_template_id_4dbe863e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Stats.vue?vue&type=template&id=4dbe863e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/Stats.vue?vue&type=template&id=4dbe863e&");
+
+
+/***/ }),
+
+/***/ "./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue?vue&type=template&id=164fe703&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue?vue&type=template&id=164fe703& ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UnpaidInvoiceReportTable_vue_vue_type_template_id_164fe703___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UnpaidInvoiceReportTable_vue_vue_type_template_id_164fe703___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UnpaidInvoiceReportTable_vue_vue_type_template_id_164fe703___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UnpaidInvoiceReportTable.vue?vue&type=template&id=164fe703& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue?vue&type=template&id=164fe703&");
 
 
 /***/ }),
@@ -70102,7 +70664,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "grid grid-cols-5 gap-2" }, [
+    _c("div", { staticClass: "py-4 grid grid-cols-5 gap-2" }, [
       _c("div", { staticClass: "col-span-2" }, [
         _c(
           "label",
@@ -70180,7 +70742,7 @@ var render = function() {
           "button",
           {
             staticClass:
-              "mt-2 inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+              "mt-4 inline-flex items-center px-2.5 py-2 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
             attrs: { type: "button" },
             on: {
               click: function($event) {
@@ -70194,14 +70756,525 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "mt-4" },
-      [_c("stats", { attrs: { stats: _vm.stats } })],
-      1
-    ),
+    _vm.building
+      ? _c("div", [
+          _c(
+            "div",
+            { staticClass: "mt-4" },
+            [_c("stats", { attrs: { stats: _vm.stats } })],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "mt-4" },
+            [
+              _c(
+                "app-tabs",
+                _vm._l(_vm.tabs, function(tab, index) {
+                  return _c(
+                    "app-tab",
+                    {
+                      key: index,
+                      attrs: { name: tab.name, selected: index === 0 }
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "mt-4" },
+                        [
+                          tab.value === "payments"
+                            ? _c("payments-report-table-list", {
+                                attrs: { payments: _vm.building.payments }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          tab.value === "unpaid"
+                            ? _c("unpaid-invoices-report-table", {
+                                attrs: {
+                                  invoices: _vm.building.unpaid_invoices
+                                }
+                              })
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                }),
+                1
+              )
+            ],
+            1
+          )
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/PaymentReportTable.vue?vue&type=template&id=36f25af6&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/PaymentReportTable.vue?vue&type=template&id=36f25af6& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "grid grid-cols-4 gap-2" }, [
+      _c("div", { staticClass: "col-span-2" }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-span-2 flex justify-end space-x-3" },
+        [
+          _c(
+            "div",
+            [
+              _c("app-drop-down", { attrs: { label: "Bulk Actions" } }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "block flex items-center space-x-2 class = 'block flex w-full px-4 py-2 space-x-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900'",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.exportSelected($event)
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "h-5 w-5 text-cool-gray-400",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          viewBox: "0 0 20 20",
+                          fill: "currentColor"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            "fill-rule": "evenodd",
+                            d:
+                              "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z",
+                            "clip-rule": "evenodd"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("Export")])
+                  ]
+                )
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("payment-show-modal", { ref: "paymentShowModal" })
+        ],
+        1
+      )
+    ]),
     _vm._v(" "),
-    _c("div", { staticClass: "mt-4" }, [_vm._v("\n        tables\n    ")])
+    _c("div", { staticClass: "mt-3" }, [
+      _c(
+        "div",
+        { staticClass: "overflow-hidden border-b border-gray-200 sm:rounded" },
+        [
+          _c("table", { staticClass: "min-w-full divide-y divide-gray-200" }, [
+            _c("thead", { staticClass: "bg-gray-50" }, [
+              _c("tr", [
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectAll,
+                          expression: "selectAll"
+                        }
+                      ],
+                      attrs: { type: "checkbox" },
+                      domProps: {
+                        checked: Array.isArray(_vm.selectAll)
+                          ? _vm._i(_vm.selectAll, null) > -1
+                          : _vm.selectAll
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.selectAll,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.selectAll = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.selectAll = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.selectAll = $$c
+                          }
+                        }
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Building\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        House\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Tenant\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Amount\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      " px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Month\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      " px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Date Paid\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      " px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Status\n                    "
+                    )
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              { staticClass: "bg-white divide-y divide-gray-200" },
+              _vm._l(_vm.payments, function(payment) {
+                return _c("tr", { key: payment.id }, [
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selected,
+                            expression: "selected"
+                          }
+                        ],
+                        attrs: { type: "checkbox" },
+                        domProps: {
+                          value: payment.id,
+                          checked: Array.isArray(_vm.selected)
+                            ? _vm._i(_vm.selected, payment.id) > -1
+                            : _vm.selected
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.selected,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = payment.id,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 && (_vm.selected = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.selected = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.selected = $$c
+                            }
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap font-medium text-gray-900 capitalize"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(payment.building_name) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap font-medium text-gray-900 capitalize"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(payment.house_name) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap font-medium text-gray-900 capitalize"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(payment.tenant_name) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap font-medium text-gray-900"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(payment.amount.toLocaleString()) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "px-6 py-4 whitespace-nowrap text-gray-500"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(payment.month) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "px-6 py-4 whitespace-nowrap text-gray-500"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(payment.date_paid) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap text-gray-500 capitalize"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(payment.status) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "flex space-x-3 justify-center px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
+                    },
+                    [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "text-indigo-600 hover:text-indigo-900",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.printReceipt(payment)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              staticClass: "h-5 w-5",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                viewBox: "0 0 20 20",
+                                fill: "currentColor"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                attrs: {
+                                  "fill-rule": "evenodd",
+                                  d:
+                                    "M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z",
+                                  "clip-rule": "evenodd"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "text-gray-600 hover:text-indigo-900",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.viewPayment(payment)
+                            }
+                          }
+                        },
+                        [_vm._v("view")]
+                      )
+                    ]
+                  )
+                ])
+              }),
+              0
+            )
+          ])
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -70323,6 +71396,405 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue?vue&type=template&id=164fe703&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/app/reports/partials/UnpaidInvoiceReportTable.vue?vue&type=template&id=164fe703& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "grid grid-cols-4 gap-2" }, [
+      _c("div", { staticClass: "col-span-2" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-span-2 flex justify-end space-x-3" }, [
+        _c(
+          "div",
+          [
+            _c("app-drop-down", { attrs: { label: "Bulk Actions" } }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "block flex items-center space-x-2 class = 'block flex w-full px-4 py-2 space-x-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900'",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.exportSelected($event)
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "h-5 w-5 text-cool-gray-400",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        viewBox: "0 0 20 20",
+                        fill: "currentColor"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          "fill-rule": "evenodd",
+                          d:
+                            "M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z",
+                          "clip-rule": "evenodd"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Export")])
+                ]
+              )
+            ])
+          ],
+          1
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "mt-3" }, [
+      _c(
+        "div",
+        { staticClass: "overflow-hidden border-b border-gray-200 sm:rounded" },
+        [
+          _c("table", { staticClass: "min-w-full divide-y divide-gray-200" }, [
+            _c("thead", { staticClass: "bg-gray-50" }, [
+              _c("tr", [
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectAll,
+                          expression: "selectAll"
+                        }
+                      ],
+                      attrs: { type: "checkbox" },
+                      domProps: {
+                        checked: Array.isArray(_vm.selectAll)
+                          ? _vm._i(_vm.selectAll, null) > -1
+                          : _vm.selectAll
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.selectAll,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.selectAll = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.selectAll = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.selectAll = $$c
+                          }
+                        }
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Building\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        House\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Tenant\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Invoiced Amount\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Paid\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Balance\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "th",
+                  {
+                    staticClass:
+                      " px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    attrs: { scope: "col" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Month\n                    "
+                    )
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              { staticClass: "bg-white divide-y divide-gray-200" },
+              _vm._l(_vm.invoices, function(invoice) {
+                return _c("tr", { key: invoice.id }, [
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selected,
+                            expression: "selected"
+                          }
+                        ],
+                        attrs: { type: "checkbox" },
+                        domProps: {
+                          value: invoice.id,
+                          checked: Array.isArray(_vm.selected)
+                            ? _vm._i(_vm.selected, invoice.id) > -1
+                            : _vm.selected
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.selected,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = invoice.id,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 && (_vm.selected = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.selected = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.selected = $$c
+                            }
+                          }
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap font-medium text-gray-900 capitalize"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(invoice.building_name) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap font-medium text-gray-900 capitalize"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(invoice.house_name) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap font-medium text-gray-900 capitalize"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(invoice.tenant_name) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap font-medium text-gray-900"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(invoice.amount.toLocaleString()) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap font-medium text-gray-900"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(invoice.paid.toLocaleString()) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass:
+                        "px-6 py-4 whitespace-nowrap font-medium text-gray-900"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(invoice.balance.toLocaleString()) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "px-6 py-4 whitespace-nowrap text-gray-500"
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(invoice.month) +
+                          "\n                    "
+                      )
+                    ]
+                  )
+                ])
+              }),
+              0
+            )
+          ])
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -70802,14 +72274,14 @@ var render = function() {
     _c("nav", { staticClass: "bg-white px-8 pt-2 border-b border-gray-200" }, [
       _c(
         "div",
-        { staticClass: "-mb-px flex space-x-2" },
+        { staticClass: "-mb-px flex space-x-8" },
         _vm._l(_vm.tabs, function(tab) {
           return _c(
             "a",
             {
               key: tab.name,
               staticClass:
-                "no-underline border-b-2 border-transparent uppercase tracking-wide font-medium text-gray-600 text-xs py-3 mr-8",
+                "no-underline border-b-2 border-transparent uppercase tracking-wide font-medium text-gray-600 text-xs py-3",
               class: {
                 "border-indigo-400 font-bold text-gray-800": tab.isActive
               },

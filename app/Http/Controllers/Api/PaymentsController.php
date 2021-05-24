@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
+use App\Jobs\UpdateInvoiceAfterPayment;
 use App\Models\{House, Building, Payment};
 use App\Http\Requests\{StorePaymentRequest, UpdatePaymentRequest};
 use App\Http\Resources\{BuildingResource, PaymentCollection, PaymentResource};
@@ -48,6 +49,8 @@ class PaymentsController extends Controller
                 'date_paid' => Carbon::parse($request->get('date_paid')),
             ]
         ));
+
+        UpdateInvoiceAfterPayment::dispatchSync($payment);
 
         return response(new PaymentResource($payment));
     }

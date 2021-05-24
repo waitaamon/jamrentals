@@ -119,3 +119,10 @@
 .month-picker-input-container {
     width: 100% !important;
 }
+.month-picker__container {
+    z-index: 99;
+}
+.month-picker--default {
+    background-color: white;
+
+}

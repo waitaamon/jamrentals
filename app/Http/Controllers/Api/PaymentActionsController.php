@@ -9,6 +9,7 @@ use App\Exports\PaymentsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use App\Jobs\UpdateInvoiceAfterPayment;
 
 class PaymentActionsController extends Controller
 {
@@ -16,12 +17,16 @@ class PaymentActionsController extends Controller
     {
         Payment::find($request->get('payments'))
             ->each(function ($payment) {
+
                 $payment->update([
                     'status' => 'reversed',
                     'reversed_by' => auth()->id(),
                     'reversed_on' => now(),
                     'note' => ''
                 ]);
+
+                UpdateInvoiceAfterPayment::dispatchSync($payment);
+
             });
     }
 
