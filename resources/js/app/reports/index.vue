@@ -22,9 +22,6 @@
                         id="month"
                         class="w-full"
                         :no-default="true"
-                        :input-pre-filled="true"
-                        :default-month="currentMonth"
-                        :default-year="currentYear"
                         v-model="filters.month"
                     ></month-picker-input>
 
@@ -56,6 +53,7 @@
                         <div class="mt-4">
                             <payments-report-table-list :payments="building.payments" v-if="tab.value === 'payments'"/>
                             <unpaid-invoices-report-table :invoices="building.unpaid_invoices" v-if="tab.value === 'unpaid'" />
+                            <vacant-houses-report-table :houses="building.vacant_houses" v-if="tab.value === 'vacant'" />
                         </div>
                     </app-tab>
                 </app-tabs>
@@ -71,10 +69,13 @@ import AppTabs from "../../components/tabs/AppTabs";
 import AppTab from "../../components/tabs/AppTab";
 import PaymentsReportTableList from "./partials/PaymentReportTable";
 import UnpaidInvoicesReportTable from "./partials/UnpaidInvoiceReportTable";
+import VacantHousesReportTable from "./partials/VacantHousesReportTable";
 
 export default {
     name: 'reports-index',
-    components: {UnpaidInvoicesReportTable, PaymentsReportTableList, Stats, MonthPickerInput, AppTab, AppTabs},
+    components: {
+        VacantHousesReportTable,
+        UnpaidInvoicesReportTable, PaymentsReportTableList, Stats, MonthPickerInput, AppTab, AppTabs},
     data() {
         return {
             buildings: [],
@@ -87,7 +88,7 @@ export default {
             tabs: [
                 {name: 'Payments', value: 'payments'},
                 {name: 'Unpaid Rent', value: 'unpaid'},
-                {name: 'Deposit', value: 'deposit'},
+                // {name: 'Deposit', value: 'deposit'},
                 {name: 'Vacant Houses', value: 'vacant'},
             ],
         }
