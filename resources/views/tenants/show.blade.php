@@ -26,8 +26,9 @@
                     <div class="mt-4 w-full">
                         <div class="mt-4">
                             <h4 class="mb-4 font-bold uppercase tracking-wide text-gray-400">Payments</h4>
-                                {{ $tenant->payments }}
+                            <tenant-payments-table :tenant-id="{{ $tenant->id }}"></tenant-payments-table>
                         </div>
+
                     </div>
                 </div>
             </div>

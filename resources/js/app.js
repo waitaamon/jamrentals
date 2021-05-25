@@ -22,6 +22,7 @@ Vue.use(VueToast, {
 Vue.component('buildings-list', require('./app/buildings/BuildingsList.vue').default)
 Vue.component('building-show', require('./app/buildings/Show.vue').default)
 Vue.component('payments-list', require('./app/payments/PaymentsList.vue').default)
+Vue.component('tenant-payments-table', require('./app/tenants/TenantPaymentsTable.vue').default)
 Vue.component('reports-index', require('./app/reports/index.vue').default)
 
 const app = new Vue({

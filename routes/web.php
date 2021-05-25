@@ -26,6 +26,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::apiResource('api/houses', \App\Http\Controllers\Api\HousesController::class);
     Route::apiResource('api/tenants', \App\Http\Controllers\Api\TenantsController::class);
 
+    Route::get('api/tenant-payments/{id}', [App\Http\Controllers\TenantController::class, 'payments']);
+
     Route::post('api/house-mark-vacant', [App\Http\Controllers\Api\HouseActionsController::class, 'markVacant']);
     Route::post('api/houses-export-excel', [App\Http\Controllers\Api\HouseActionsController::class, 'exportExcel']);
 
